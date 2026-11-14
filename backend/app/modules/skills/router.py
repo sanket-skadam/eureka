@@ -23,3 +23,4 @@ def list_employees(department: Optional[str] = None, store = Depends(get_store))
         "count": len(emps),
         "employees": emps
     }
+

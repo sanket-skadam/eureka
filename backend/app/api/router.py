@@ -18,3 +18,4 @@ api_router.include_router(skills_router)
 api_router.include_router(learning_router)
 api_router.include_router(adoption_router)
 api_router.include_router(digest_router)
+

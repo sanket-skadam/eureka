@@ -66,3 +66,4 @@ def mentor_chat(req: MentorChatRequest):
         "reply": reply,
         "mentor": "Tangentia AI Engineering Companion (Gemini 1.5)"
     }
+

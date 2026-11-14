@@ -32,3 +32,4 @@ def switch_workspace(req: SwitchWorkspaceRequest, store = Depends(get_store)):
                 "active_org": o
             }
     raise HTTPException(status_code=404, detail="Organization not found")
+

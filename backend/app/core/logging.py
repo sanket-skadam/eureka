@@ -10,3 +10,4 @@ def setup_logging():
     return logging.getLogger("eureka")
 
 logger = setup_logging()
+

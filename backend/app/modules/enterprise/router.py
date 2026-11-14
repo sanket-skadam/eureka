@@ -86,3 +86,4 @@ def rag_retrieve(req: RAGRetrieveRequest, store = Depends(get_store)):
         "confidenceScore": 96.4,
         "matchedDocs": matched[:req.top_k]
     }
+

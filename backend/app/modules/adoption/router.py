@@ -27,3 +27,4 @@ def generate_dossier(comp_id: str, store = Depends(get_store)):
         "export_format": "PDF / Markdown Dossier",
         "generated_for": "Tangentia Architecture Review Board"
     }
+

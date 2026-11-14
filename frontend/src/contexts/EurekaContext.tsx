@@ -69,7 +69,12 @@ export const EurekaProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const changeOrganization = (orgId: string) => {
     const found = state.organizations.find(o => o.id === orgId);
     if (found) {
-      logApiCall('POST', `/api/v1/workspaces/switch`, 200, 42, `Switched workspace to ${found.name}`);
+      apiFetch('/api/v1/workspaces/switch', {
+        method: 'POST',
+        body: JSON.stringify({ org_id: orgId })
+      }).then(({ live }) => {
+        logApiCall('POST', `/api/v1/workspaces/switch`, 200, 42, `Switched workspace to ${found.name} (${live ? 'Backend Connected' : 'Local Fallback'})`);
+      });
       setState(prev => ({
         ...prev,
         activeOrg: found
@@ -94,14 +99,31 @@ export const EurekaProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     ];
 
     for (let i = 0; i < stages.length; i++) {
+      const stageName = stages[i].name.toLowerCase();
       onProgress(i, stages[i].log);
-      logApiCall('POST', `/api/v1/pipeline/stage/${stages[i].name.toLowerCase()}`, 200, 110, stages[i].log);
+      
+      const { data, live } = await apiFetch<any>(`/api/v1/pipeline/stage/${stageName}`, {
+        method: 'POST'
+      });
+
+      const summary = data?.telemetry?.summary || stages[i].log;
+      logApiCall('POST', `/api/v1/pipeline/stage/${stageName}`, 200, 110, `${summary} (${live ? 'Live API' : 'Simulated'})`);
       await new Promise(res => setTimeout(res, 550));
     }
   };
 
   const runRAGSearch = (query: string) => {
-    logApiCall('POST', '/api/v1/enterprise/rag/retrieve', 200, 138, `RAG query: "${query.substring(0, 40)}..."`);
+    // Call backend RAG retrieval asynchronously
+    apiFetch<any>('/api/v1/enterprise/rag/retrieve', {
+      method: 'POST',
+      body: JSON.stringify({ query, top_k: 3 })
+    }).then(({ data, live }) => {
+      if (live && data?.synthesis) {
+        logApiCall('POST', '/api/v1/enterprise/rag/retrieve', 200, 118, `RAG query: "${query.substring(0, 35)}..." (FastAPI Backend)`);
+      } else {
+        logApiCall('POST', '/api/v1/enterprise/rag/retrieve', 200, 138, `RAG query: "${query.substring(0, 35)}..." (Local RAG Engine)`);
+      }
+    });
     
     // Find documents matching query terms or return top relevant Tangentia documents
     const qLower = query.toLowerCase();
@@ -145,7 +167,18 @@ export const EurekaProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       tags: ['Tangentia TiA', 'Internal Spec', 'RAG Indexed']
     };
 
-    logApiCall('POST', '/api/v1/enterprise/documents/upload', 201, 260, `Uploaded & chunked ${newDoc.title} (${newDoc.chunksCount} chunks)`);
+    apiFetch('/api/v1/enterprise/documents/upload', {
+      method: 'POST',
+      body: JSON.stringify({
+        title: newDoc.title,
+        type: newDoc.type,
+        size: newDoc.size,
+        summary: newDoc.summary
+      })
+    }).then(({ live }) => {
+      logApiCall('POST', '/api/v1/enterprise/documents/upload', 201, 260, `Uploaded & chunked ${newDoc.title} (${live ? 'pgvector live' : 'local store'})`);
+    });
+
     setState(prev => ({
       ...prev,
       documents: [newDoc, ...prev.documents]
@@ -153,7 +186,13 @@ export const EurekaProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   };
 
   const updateDigestPreferences = (prefs: Partial<DigestPreferences>) => {
-    logApiCall('PUT', '/api/v1/digest/preferences', 200, 65, 'Updated weekly digest delivery preferences');
+    apiFetch('/api/v1/digest/preferences', {
+      method: 'PUT',
+      body: JSON.stringify(prefs)
+    }).then(({ live }) => {
+      logApiCall('PUT', '/api/v1/digest/preferences', 200, 65, `Updated weekly digest preferences (${live ? 'Backend DB' : 'Local'})`);
+    });
+
     setState(prev => ({
       ...prev,
       digestPreferences: { ...prev.digestPreferences, ...prefs }

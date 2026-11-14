@@ -94,3 +94,4 @@ def execute_pipeline_stage(stage: str):
         "success": True,
         "telemetry": {"status": "completed", "summary": f"Executed pipeline stage {stage}"}
     }
+

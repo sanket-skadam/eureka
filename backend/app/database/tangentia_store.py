@@ -566,3 +566,4 @@ class TangentiaStore:
         return self.organizations[0]
 
 store = TangentiaStore()
+
