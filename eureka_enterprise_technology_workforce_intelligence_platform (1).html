@@ -1,0 +1,3349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eureka — Enterprise Technology & Workforce Intelligence</title>
+  
+  <!-- Google Fonts: Instrument Serif, Plus Jakarta Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#FBFBF8',
+            surface: '#FFFFFF',
+            tinted: '#F3F6F1',
+            mint: '#E8F5EE',
+            'mint-dark': '#D1FAE5',
+            forest: '#0A3622',
+            'forest-card': '#11472E',
+            emerald: {
+              DEFAULT: '#10B981',
+              dark: '#059669'
+            },
+            amber: {
+              DEFAULT: '#F59E0B',
+              soft: '#FEF3C7'
+            },
+            coral: {
+              DEFAULT: '#E11D48',
+              soft: '#FFE4E6',
+              dark: '#9F1239'
+            },
+            ink: {
+              DEFAULT: '#13221B',
+              secondary: '#475950',
+              muted: '#6C7D74'
+            },
+            borderLight: '#DCE5DF'
+          },
+          fontFamily: {
+            display: ['"Instrument Serif"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          boxShadow: {
+            sketch: '2.5px 2.5px 0px #13221B',
+            'sketch-sm': '1.5px 1.5px 0px #13221B',
+            'sketch-lg': '4px 4px 0px #13221B',
+            'sketch-forest': '2.5px 2.5px 0px #0A3622'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #FBFBF8;
+      color: #13221B;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .font-display {
+      font-family: 'Instrument Serif', Georgia, serif;
+      letter-spacing: -0.02em;
+      line-height: 1.08;
+    }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Tactile Neobrutalist-Organic Hybrid Card */
+    .sketch-card {
+      background-color: #FFFFFF;
+      border: 1.5px solid #13221B;
+      border-radius: 16px;
+      box-shadow: 2.5px 2.5px 0px #13221B;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .sketch-card-hover:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3.5px 3.5px 0px #13221B;
+    }
+
+    .sketch-tinted {
+      background-color: #F3F6F1;
+      border: 1.5px solid #13221B;
+      border-radius: 16px;
+      box-shadow: 2.5px 2.5px 0px #13221B;
+    }
+
+    .btn-primary {
+      background-color: #0A3622;
+      color: #FFFFFF;
+      border: 1.5px solid #13221B;
+      border-radius: 9999px;
+      padding: 10px 22px;
+      font-weight: 600;
+      box-shadow: 2px 2px 0px #13221B;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background-color: #11472E;
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px #13221B;
+    }
+
+    .btn-primary:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0px #13221B;
+    }
+
+    .btn-sketch {
+      background-color: #FFFFFF;
+      color: #0A3622;
+      border: 1.5px solid #13221B;
+      border-radius: 14px;
+      padding: 9px 16px;
+      font-weight: 600;
+      box-shadow: 2px 2px 0px #13221B;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .btn-sketch:hover {
+      background-color: #E8F5EE;
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px #13221B;
+    }
+
+    .nav-item {
+      border: 1.5px solid transparent;
+      border-radius: 14px;
+      transition: all 0.15s ease;
+    }
+
+    .nav-item:hover {
+      background-color: #F3F6F1;
+      border-color: #DCE5DF;
+    }
+
+    .nav-item.active {
+      background-color: #0A3622;
+      color: #FFFFFF;
+      border: 1.5px solid #13221B;
+      box-shadow: 2px 2px 0px #13221B;
+    }
+
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FBFBF8;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #DCE5DF;
+      border-radius: 9999px;
+      border: 1px solid #13221B;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #6C7D74;
+    }
+
+    @keyframes pulseSoft {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
+    .animate-pulse-soft {
+      animation: pulseSoft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col lg:flex-row bg-canvas text-ink antialiased">
+
+  <!-- Mobile Top Header -->
+  <header class="lg:hidden sticky top-0 z-40 bg-canvas/95 backdrop-blur border-b-2 border-ink px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-2.5">
+      <div class="w-9 h-9 rounded-xl bg-forest border-2 border-ink shadow-sketch-sm flex items-center justify-center text-white">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+          <circle cx="12" cy="12" r="4" fill="#F59E0B" stroke="#FFFFFF" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div>
+        <span class="font-display text-2xl font-normal tracking-tight text-forest">Eureka</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="toggleTelemetryDrawer()" class="px-2.5 py-1.5 rounded-xl bg-mint border border-ink text-xs font-mono font-bold text-forest shadow-sketch-sm">
+        API (<span id="mobileApiCount">0</span>)
+      </button>
+      <button onclick="toggleMobileNav()" class="btn-sketch py-2 px-3 text-sm">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        Menu
+      </button>
+    </div>
+  </header>
+
+  <!-- Sidebar Navigation -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-canvas border-r-2 border-ink transform -translate-x-full lg:translate-x-0 lg:static lg:flex-shrink-0 flex flex-col justify-between transition-transform duration-200 ease-out">
+    <div class="p-5 overflow-y-auto">
+      <!-- Brand Header -->
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('dashboard')">
+          <div class="w-11 h-11 rounded-2xl bg-forest border-2 border-ink shadow-sketch flex items-center justify-center text-white relative">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18h6M10 22h4M12 2a7 7 0 0 1 4 12.75c-.65.47-1 1.21-1 2v.25H9v-.25c0-.79-.35-1.53-1-2A7 7 0 0 1 12 2z"/>
+            </svg>
+            <!-- Amber sparkle doodle -->
+            <svg class="w-4 h-4 text-amber absolute -top-1.5 -right-1.5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 1L14.5 9.5L23 12L14.5 14.5L12 23L9.5 14.5L1 12L9.5 9.5L12 1Z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-display text-3xl text-forest leading-none">Eureka</span>
+              <span class="font-mono text-[10px] font-bold uppercase px-1.5 py-0.5 rounded-md bg-mint text-forest border border-ink">v1.4</span>
+            </div>
+            <p class="text-xs text-ink-muted font-medium mt-0.5">Workforce & Tech Intelligence</p>
+          </div>
+        </div>
+        <button onclick="toggleMobileNav()" class="lg:hidden p-1.5 rounded-lg border border-ink bg-white">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Organization Context Pill -->
+      <div class="mb-6 p-3 rounded-2xl bg-tinted border border-ink">
+        <div class="flex items-center justify-between text-[11px] font-mono uppercase text-ink-muted mb-1">
+          <span>Active Workspace</span>
+          <span class="flex items-center gap-1 text-emerald-dark font-semibold">
+            <span class="w-2 h-2 rounded-full bg-emerald animate-pulse"></span> RLS Active
+          </span>
+        </div>
+        <select id="orgSelector" onchange="handleOrgChange(this.value)" class="w-full bg-white border border-ink rounded-xl px-2.5 py-1.5 text-xs font-bold text-ink focus:outline-none cursor-pointer">
+          <option value="org_apex_fintech|Apex FinTech Corp">Apex FinTech Corp</option>
+          <option value="org_meridian_health|Meridian Health Systems">Meridian Health Systems</option>
+          <option value="org_vanguard_ai|Vanguard Logistics AI">Vanguard Logistics AI</option>
+        </select>
+        <div class="mt-2 flex items-center justify-between text-[11px] text-ink-secondary">
+          <span>Header: <strong id="activeOrgHeaderCode" class="font-mono text-forest">org_apex_fintech</strong></span>
+          <span class="font-mono">pgvector: ON</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links (7 Core Flow Steps) -->
+      <div class="space-y-1.5">
+        <p class="px-2.5 text-[11px] font-mono uppercase tracking-wider text-ink-muted mb-2">Intelligence Workflow</p>
+        
+        <button onclick="navigateTo('dashboard')" data-nav="dashboard" class="nav-item active w-full flex items-center justify-between px-3.5 py-2.5 text-sm font-semibold text-left">
+          <span class="flex items-center gap-2.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+            Executive Dashboard
+          </span>
+          <span class="font-mono text-[10px] opacity-80">01</span>
+        </button>
+
+        <button onclick="navigateTo('tech-hub')" data-nav="tech-hub" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 text-sm font-semibold text-left">
+          <span class="flex items-center gap-2.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            Technology Hub
+          </span>
+          <span id="sidebarTechCountBadge" class="font-mono text-[10px] px-1.5 py-0.5 rounded-full bg-mint text-forest border border-ink/20">6</span>
+        </button>
+
+        <button onclick="navigateTo('enterprise-rag')" data-nav="enterprise-rag" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 text-sm font-semibold text-left">
+          <span class="flex items-center gap-2.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            Enterprise RAG
+          </span>
+          <span class="font-mono text-[10px] opacity-80">03</span>
+        </button>
+
+        <button onclick="navigateTo('skill-intelligence')" data-nav="skill-intelligence" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 text-sm font-semibold text-left">
+          <span class="flex items-center gap-2.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Skill Intelligence
+          </span>
+          <span id="sidebarGapCountBadge" class="font-mono text-[10px] px-1.5 py-0.5 rounded-full bg-coral-soft text-coral-dark border border-coral/30">4 Gaps</span>
+        </button>
+
+        <button onclick="navigateTo('upskilling-studio')" data-nav="upskilling-studio" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 text-sm font-semibold text-left">
+          <span class="flex items-center gap-2.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            Upskilling Studio
+          </span>
+          <span class="font-mono text-[10px] opacity-80">05</span>
+        </button>
+
+        <button onclick="navigateTo('adoption-advisor')" data-nav="adoption-advisor" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 text-sm font-semibold text-left">
+          <span class="flex items-center gap-2.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M3 9l9-6 9 6"/><path d="M5 12l-2 5h4l-2-5z"/><path d="M19 12l-2 5h4l-2-5z"/></svg>
+            Adoption Advisor
+          </span>
+          <span class="font-mono text-[10px] opacity-80">06</span>
+        </button>
+
+        <button onclick="navigateTo('weekly-digest')" data-nav="weekly-digest" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 text-sm font-semibold text-left">
+          <span class="flex items-center gap-2.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Weekly Digest
+          </span>
+          <span class="font-mono text-[10px] px-1.5 py-0.5 rounded-full bg-amber-soft text-amber-900 border border-amber/40">#48</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom User Profile & Pipeline Status -->
+    <div class="p-4 border-t border-borderLight bg-tinted/60 space-y-2.5">
+      <button onclick="toggleTelemetryDrawer()" class="w-full py-2 px-3 rounded-xl bg-white border border-ink shadow-sketch-sm hover:bg-mint transition flex items-center justify-between text-xs font-mono font-bold text-forest">
+        <span class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald animate-pulse"></span>
+          API & Plugins (Live)
+        </span>
+        <span id="sidebarApiCount" class="px-1.5 py-0.5 rounded bg-mint border border-ink/20 text-[10px]">0 calls</span>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-forest text-white font-display text-lg flex items-center justify-center border border-ink">
+          AD
+        </div>
+        <div class="min-w-0 flex-1">
+          <p class="text-xs font-bold text-ink truncate">Ananya Deshmukh</p>
+          <p class="text-[11px] text-ink-muted truncate">Staff Platform Architect</p>
+        </div>
+        <button onclick="resetMockDatabase()" title="Reset Mock DB (localStorage)" class="p-1.5 rounded-xl bg-white border border-ink hover:bg-coral-soft transition-colors text-ink" aria-label="Reset Mock Database">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Mobile Overlay -->
+  <div id="mobileOverlay" onclick="toggleMobileNav()" class="fixed inset-0 bg-ink/40 backdrop-blur-xs z-40 hidden lg:hidden"></div>
+
+  <!-- Main Content Canvas -->
+  <main class="flex-1 min-w-0">
+    <!-- Top Telemetry & Backend Status Bar -->
+    <div class="sticky top-0 z-30 hidden lg:flex items-center justify-between px-8 py-2.5 bg-canvas/90 backdrop-blur border-b border-borderLight text-xs">
+      <div class="flex items-center gap-3 font-mono text-[11px] text-ink-secondary">
+        <span class="px-2 py-0.5 rounded bg-tinted border border-ink/30 text-forest font-bold">REST /api/v1</span>
+        <span id="topBarLastEndpoint" class="truncate max-w-md">GET /api/v1/technologies • 200 OK (210ms)</span>
+      </div>
+      <div class="flex items-center gap-2.5">
+        <button onclick="toggleTelemetryDrawer()" class="px-3 py-1 rounded-full bg-mint border border-ink shadow-sketch-sm hover:bg-mint-dark transition font-mono text-[11px] font-bold text-forest flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald animate-pulse"></span>
+          <span>API & Plugins (Live)</span>
+          <span id="topBarApiCounter" class="px-1.5 py-0.2 rounded-full bg-forest text-white text-[10px]">0</span>
+        </button>
+        <button onclick="resetMockDatabase()" class="px-2.5 py-1 rounded-full bg-white border border-ink hover:bg-coral-soft transition font-mono text-[11px] font-semibold text-ink">
+          Reset Mock DB
+        </button>
+      </div>
+    </div>
+
+    <div class="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
+
+      <!-- ===================================================================== -->
+      <!-- PAGE 1: EXECUTIVE INTELLIGENCE DASHBOARD (/dashboard)                 -->
+      <!-- ===================================================================== -->
+      <section id="page-dashboard" class="page-view space-y-7">
+        <!-- Top Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mint border border-ink text-xs font-semibold text-forest mb-2">
+              <span class="w-2 h-2 rounded-full bg-emerald"></span>
+              <span id="dashboardOrgLabel">Apex FinTech Corp — Engineering & L&D</span>
+            </div>
+            <h1 class="font-display text-4xl sm:text-5xl text-ink relative inline-block">
+              Enterprise Technology Radar
+              <!-- Hand-drawn Amber SVG Underline Squiggle -->
+              <svg class="w-48 h-3 text-amber mt-1" viewBox="0 0 200 12" fill="none">
+                <path d="M2 8.5C38 3 72 11 108 6C144 1 174 9 198 4.5" stroke="#F59E0B" stroke-width="3.5" stroke-linecap="round"/>
+              </svg>
+            </h1>
+            <p class="text-sm sm:text-base text-ink-secondary mt-1 max-w-2xl">
+              Continuous technology discovery linked directly to internal architecture documents, employee skill gaps, and verified adoption decisions.
+            </p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="toggleAgenticPanel()" class="btn-sketch text-sm bg-amber-soft/60 hover:bg-amber-soft">
+              <svg class="w-4 h-4 text-amber-900" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 1 4 4v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2V6a4 4 0 0 1 4-4z"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/></svg>
+              <span>Agentic Orchestrator</span>
+            </button>
+            <button onclick="runDiscoveryPipeline()" id="runPipelineBtn" class="btn-primary text-sm">
+              <svg class="w-4 h-4 text-amber" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span>Run Discovery Pipeline</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- AGENTIC AI ORCHESTRATOR PANEL (Future Extension Preview Mode) -->
+        <div id="agenticOrchestratorPanel" class="sketch-card p-5 sm:p-6 bg-tinted border-2 border-ink space-y-5">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-borderLight pb-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-[11px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-amber text-ink border border-ink">Future Extension • Autonomous Multi-Step Agents</span>
+                <span class="font-mono text-xs text-forest font-bold">Human-in-the-Loop Gated</span>
+              </div>
+              <h2 class="font-display text-2xl sm:text-3xl text-ink mt-1">Agentic Workflow Simulator</h2>
+              <p class="text-xs text-ink-secondary">Launch autonomous tool-calling agents backed by <span class="font-mono">GitHubAdapter</span>, <span class="font-mono">HuggingFaceAdapter</span>, <span class="font-mono">PgVectorAdapter</span>, and <span class="font-mono">GeminiLLMAdapter</span>.</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button onclick="launchAgentWorkflow('research')" class="btn-primary text-xs py-2 px-3.5">
+                ▶ Agent 1: Deep Research & Ingest
+              </button>
+              <button onclick="launchAgentWorkflow('rag_auditor')" class="btn-sketch text-xs py-2 px-3.5">
+                ▶ Agent 2: Enterprise RAG Auditor
+              </button>
+              <button onclick="launchAgentWorkflow('curriculum')" class="btn-sketch text-xs py-2 px-3.5">
+                ▶ Agent 3: Adaptive Curriculum
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Agent Trace Output & Approval Gate -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+            <div class="lg:col-span-8 rounded-2xl bg-[#13221B] text-white border-2 border-ink p-4 font-mono text-xs space-y-2 max-h-64 overflow-y-auto" id="agentTraceConsole">
+              <div class="text-amber font-bold">[ORCHESTRATOR READY] Select an autonomous agent above to inspect multi-step tool calls, confidence scores, and DB mutations.</div>
+            </div>
+            <div class="lg:col-span-4 p-4 rounded-2xl bg-white border border-ink space-y-3" id="agentApprovalCard">
+              <div class="font-mono text-[11px] font-bold uppercase text-ink-muted">Human-in-the-Loop Gate</div>
+              <p class="text-xs text-ink-secondary leading-relaxed">
+                Autonomous agents stage database writes (new technologies, RAG risk memos, skill score updates) for architect approval before committing to <span class="font-mono">EurekaDB</span>.
+              </p>
+              <div id="agentPendingActionBox" class="p-3 rounded-xl bg-canvas border border-dashed border-ink text-xs text-ink-muted">
+                No pending agent commit awaiting approval.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive 7-Stage Pipeline Status Drawer -->
+        <div id="pipelineTrackerCard" class="sketch-tinted p-4 sm:p-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-2">
+              <span class="font-mono text-xs font-bold uppercase px-2 py-0.5 rounded-md bg-forest text-white">Pipeline Engine</span>
+              <span id="pipelineStatusText" class="text-xs font-semibold text-ink-secondary">Synced with EurekaDB • 6 verified technologies active</span>
+            </div>
+            <span class="font-mono text-xs text-emerald-dark font-bold">Adapters: GitHub • HuggingFace • Reddit • RSS</span>
+          </div>
+          <div id="pipelineStagesGrid" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- 4 KPI Stat Cards (Computed dynamically from EurekaDB) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-5">
+          <div class="sketch-card sketch-card-hover p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-ink-muted">Active Tech Tracked</span>
+              <span class="w-8 h-8 rounded-xl bg-mint border border-ink flex items-center justify-center text-forest">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </span>
+            </div>
+            <div class="flex items-baseline gap-2.5">
+              <span id="kpiTrackedCount" class="font-mono text-3xl sm:text-4xl font-bold text-ink">6</span>
+              <span class="font-mono text-xs font-semibold px-2 py-0.5 rounded-full bg-mint text-emerald-dark border border-emerald/30">100% Verified</span>
+            </div>
+            <p class="text-xs text-ink-secondary mt-2">Persisted in EurekaDB with repo provenance</p>
+          </div>
+
+          <div class="sketch-card sketch-card-hover p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-ink-muted">High-Relevance Matches</span>
+              <span class="w-8 h-8 rounded-xl bg-amber-soft border border-ink flex items-center justify-center text-amber-900">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L15 8l6 .9-4.5 4.3 1.1 6.3L12 16.5 6.4 19.5l1.1-6.3L3 8.9 9 8l3-6z"/></svg>
+              </span>
+            </div>
+            <div class="flex items-baseline gap-2.5">
+              <span id="kpiHighMatchCount" class="font-mono text-3xl sm:text-4xl font-bold text-forest">4</span>
+              <span class="font-mono text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-soft text-amber-900 border border-amber/40">&gt;85% RAG fit</span>
+            </div>
+            <p class="text-xs text-ink-secondary mt-2">Matched against <span id="kpiDocChunksCount">384</span> pgvector chunks</p>
+          </div>
+
+          <div class="sketch-card sketch-card-hover p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-ink-muted">Critical Skill Gaps</span>
+              <span class="w-8 h-8 rounded-xl bg-coral-soft border border-ink flex items-center justify-center text-coral">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </span>
+            </div>
+            <div class="flex items-baseline gap-2.5">
+              <span id="kpiSkillGapCount" class="font-mono text-3xl sm:text-4xl font-bold text-coral">4</span>
+              <span class="font-mono text-xs font-semibold px-2 py-0.5 rounded-full bg-coral-soft text-coral-dark border border-coral/30">Action Req</span>
+            </div>
+            <p class="text-xs text-ink-secondary mt-2">Blocking Q4 Fraud RAG & Edge inference</p>
+          </div>
+
+          <div class="sketch-card sketch-card-hover p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-ink-muted">Active Plugins</span>
+              <span class="w-8 h-8 rounded-xl bg-mint border border-ink flex items-center justify-center text-emerald-dark">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </span>
+            </div>
+            <div class="flex items-baseline gap-2.5">
+              <span id="kpiActivePluginsCount" class="font-mono text-3xl sm:text-4xl font-bold text-ink">8/8</span>
+              <span class="font-mono text-xs font-semibold px-2 py-0.5 rounded-full bg-mint text-emerald-dark border border-emerald/30">Healthy</span>
+            </div>
+            <p class="text-xs text-ink-secondary mt-2">GitHub, HF, Gemini, Judge0, Resend</p>
+          </div>
+        </div>
+
+        <!-- Core Workflow Tracker Banner -->
+        <div class="sketch-card p-5 bg-forest text-white relative overflow-hidden">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs uppercase tracking-wider text-amber font-bold">End-to-End Capability Loop</span>
+                <svg class="w-4 h-4 text-amber" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L14.5 9.5L23 12L14.5 14.5L12 23L9.5 14.5L1 12L9.5 9.5L12 1Z"/></svg>
+              </div>
+              <h2 class="font-display text-2xl sm:text-3xl text-white mt-0.5">From External Signal to Production Readiness</h2>
+            </div>
+            <button onclick="navigateTo('tech-hub')" class="px-4 py-2 rounded-full bg-amber text-ink font-bold text-xs border border-ink shadow-sketch-sm hover:bg-amber/90 transition self-start lg:self-auto">
+              Start Workflow in Tech Hub →
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+            <button onclick="navigateTo('tech-hub')" class="text-left p-3 rounded-xl bg-forest-card border border-white/20 hover:border-amber transition group">
+              <div class="font-mono text-[10px] text-amber mb-1">01 • DISCOVER</div>
+              <div class="font-bold text-sm text-white group-hover:text-amber">Multi-Source Radar</div>
+              <div class="text-[11px] text-white/70 mt-0.5">Live adapters</div>
+            </button>
+            <button onclick="openTechDetail('pgvector-08')" class="text-left p-3 rounded-xl bg-forest-card border border-white/20 hover:border-amber transition group">
+              <div class="font-mono text-[10px] text-amber mb-1">02 • UNDERSTAND</div>
+              <div class="font-bold text-sm text-white group-hover:text-amber">Structured Briefs</div>
+              <div class="text-[11px] text-white/70 mt-0.5">Hype-filtered specs</div>
+            </button>
+            <button onclick="navigateTo('enterprise-rag')" class="text-left p-3 rounded-xl bg-forest-card border border-white/20 hover:border-amber transition group">
+              <div class="font-mono text-[10px] text-amber mb-1">03 • CONTEXTUALIZE</div>
+              <div class="font-bold text-sm text-white group-hover:text-amber">Enterprise RAG</div>
+              <div class="text-[11px] text-white/70 mt-0.5">pgvector retrieval</div>
+            </button>
+            <button onclick="navigateTo('skill-intelligence')" class="text-left p-3 rounded-xl bg-forest-card border border-white/20 hover:border-amber transition group">
+              <div class="font-mono text-[10px] text-amber mb-1">04 • SKILL GAPS</div>
+              <div class="font-bold text-sm text-white group-hover:text-amber">Competency Matrix</div>
+              <div class="text-[11px] text-white/70 mt-0.5">Deterministic deltas</div>
+            </button>
+            <button onclick="navigateTo('upskilling-studio')" class="text-left p-3 rounded-xl bg-forest-card border border-white/20 hover:border-amber transition group">
+              <div class="font-mono text-[10px] text-amber mb-1">05 • UPSKILL</div>
+              <div class="font-bold text-sm text-white group-hover:text-amber">Adaptive Studio</div>
+              <div class="text-[11px] text-white/70 mt-0.5">AI Mentor + Judge0</div>
+            </button>
+            <button onclick="navigateTo('adoption-advisor')" class="text-left p-3 rounded-xl bg-forest-card border border-white/20 hover:border-amber transition group">
+              <div class="font-mono text-[10px] text-amber mb-1">06 • ADOPT</div>
+              <div class="font-bold text-sm text-white group-hover:text-amber">Decision Matrix</div>
+              <div class="text-[11px] text-white/70 mt-0.5">Weighted TCO & risk</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bottom Grid: Top Contextualized Tech Alerts (8 cols) + Dept Skill Readiness (4 cols) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Top Contextualized Technology Alerts -->
+          <div class="lg:col-span-8 space-y-4">
+            <div class="flex items-center justify-between">
+              <h2 class="font-display text-2xl sm:text-3xl text-ink">Top Contextualized Technology Alerts</h2>
+              <button onclick="navigateTo('tech-hub')" class="text-xs font-bold text-forest underline underline-offset-4 hover:text-emerald-dark">View All →</button>
+            </div>
+
+            <div class="space-y-3.5" id="dashboardAlertsList">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- Department Skill Readiness Snapshot -->
+          <div class="lg:col-span-4 space-y-4">
+            <div class="flex items-center justify-between">
+              <h2 class="font-display text-2xl sm:text-3xl text-ink">Dept Readiness</h2>
+              <button onclick="navigateTo('skill-intelligence')" class="text-xs font-bold text-forest underline underline-offset-4">Full Matrix →</button>
+            </div>
+
+            <div class="sketch-card p-5 space-y-5">
+              <div>
+                <div class="flex justify-between items-center mb-1.5">
+                  <span class="text-sm font-bold text-ink">Core Platform & DB</span>
+                  <span id="deptCoreScore" class="font-mono text-xs font-bold text-emerald-dark">82% Ready</span>
+                </div>
+                <div class="w-full h-3 rounded-full bg-tinted border border-ink overflow-hidden">
+                  <div id="deptCoreBar" class="h-full bg-emerald rounded-full transition-all duration-300" style="width: 82%"></div>
+                </div>
+                <p class="text-[11px] text-ink-muted mt-1">Strong PostgreSQL; gap in HNSW iterative scans</p>
+              </div>
+
+              <div>
+                <div class="flex justify-between items-center mb-1.5">
+                  <span class="text-sm font-bold text-ink">AI & Data Engineering</span>
+                  <span class="font-mono text-xs font-bold text-amber-800">64% Ready</span>
+                </div>
+                <div class="w-full h-3 rounded-full bg-tinted border border-ink overflow-hidden">
+                  <div class="h-full bg-amber rounded-full" style="width: 64%"></div>
+                </div>
+                <p class="text-[11px] text-ink-muted mt-1">2 engineers enrolled in Hybrid RAG pathway</p>
+              </div>
+
+              <div>
+                <div class="flex justify-between items-center mb-1.5">
+                  <span class="text-sm font-bold text-ink">Frontend Systems</span>
+                  <span class="font-mono text-xs font-bold text-emerald-dark">89% Ready</span>
+                </div>
+                <div class="w-full h-3 rounded-full bg-tinted border border-ink overflow-hidden">
+                  <div class="h-full bg-forest rounded-full" style="width: 89%"></div>
+                </div>
+                <p class="text-[11px] text-ink-muted mt-1">React 19 & Tailwind v4 Oxide migration on track</p>
+              </div>
+
+              <div>
+                <div class="flex justify-between items-center mb-1.5">
+                  <span class="text-sm font-bold text-ink">AppSec & AI Governance</span>
+                  <span class="font-mono text-xs font-bold text-coral">48% Ready</span>
+                </div>
+                <div class="w-full h-3 rounded-full bg-tinted border border-ink overflow-hidden">
+                  <div class="h-full bg-coral rounded-full" style="width: 48%"></div>
+                </div>
+                <p class="text-[11px] text-ink-muted mt-1">Critical gap: RAG prompt-injection guardrails</p>
+              </div>
+
+              <div class="pt-3 border-t border-borderLight">
+                <button onclick="navigateTo('skill-intelligence')" class="btn-sketch w-full justify-center text-xs">
+                  Inspect Employee Skill Gaps
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- PAGE 2: TECHNOLOGY INTELLIGENCE HUB & EXPLORER (/tech-hub)            -->
+      <!-- ===================================================================== -->
+      <section id="page-tech-hub" class="page-view hidden space-y-6">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span class="inline-block font-mono text-xs uppercase px-2.5 py-1 rounded-full bg-mint text-forest border border-ink mb-2">Stage 01 & 02 • Discover & Understand</span>
+            <h1 class="font-display text-4xl sm:text-5xl text-ink">Technology Intelligence Hub</h1>
+            <p class="text-sm text-ink-secondary mt-1 max-w-2xl">
+              Curated, deduplicated, and claim-verified technologies extracted from authoritative repositories, research papers, and release feeds.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2.5">
+            <button onclick="ingestNewTechViaPlugin()" id="ingestTechBtn" class="btn-primary text-xs py-2.5 px-4">
+              <svg class="w-4 h-4 text-amber" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+              <span>Ingest New Tech via GitHub/HF Plugin</span>
+            </button>
+            <span class="font-mono text-xs bg-tinted border border-ink px-3 py-2 rounded-xl">
+              Showing <strong id="techCountLabel">6</strong> verified
+            </span>
+          </div>
+        </div>
+
+        <!-- Search & Filter Bar -->
+        <div class="sketch-card p-4 space-y-4">
+          <div class="flex flex-col md:flex-row gap-3">
+            <div class="relative flex-1">
+              <svg class="w-4 h-4 text-ink-muted absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="techSearchInput" oninput="filterTechnologies()" placeholder="Search technologies, capabilities, licenses (e.g. pgvector, Qwen, MCP)..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-canvas border border-ink text-sm focus:outline-none focus:ring-2 focus:ring-forest" />
+            </div>
+            <select id="techSourceFilter" onchange="filterTechnologies()" class="px-3.5 py-2.5 rounded-xl bg-canvas border border-ink text-sm font-semibold text-ink cursor-pointer">
+              <option value="All">All Sources (GitHub, HF, RSS)</option>
+              <option value="GitHub">Source: GitHub</option>
+              <option value="Hugging Face">Source: Hugging Face</option>
+              <option value="RSS">Source: Official RSS / Docs</option>
+              <option value="Reddit">Source: Reddit Signal</option>
+            </select>
+          </div>
+
+          <!-- Domain Category Pills -->
+          <div class="flex flex-wrap items-center gap-2" id="domainFilterPills">
+            <button onclick="setDomainFilter('All')" data-domain="All" class="domain-pill px-3.5 py-1.5 rounded-full text-xs font-bold border border-ink bg-forest text-white shadow-sketch-sm">All Domains</button>
+            <button onclick="setDomainFilter('Vector & RAG')" data-domain="Vector & RAG" class="domain-pill px-3.5 py-1.5 rounded-full text-xs font-bold border border-ink bg-white text-ink hover:bg-mint">Vector & RAG</button>
+            <button onclick="setDomainFilter('LLM & Agents')" data-domain="LLM & Agents" class="domain-pill px-3.5 py-1.5 rounded-full text-xs font-bold border border-ink bg-white text-ink hover:bg-mint">LLM & Agents</button>
+            <button onclick="setDomainFilter('Backend & API')" data-domain="Backend & API" class="domain-pill px-3.5 py-1.5 rounded-full text-xs font-bold border border-ink bg-white text-ink hover:bg-mint">Backend & API</button>
+            <button onclick="setDomainFilter('Frontend & Edge')" data-domain="Frontend & Edge" class="domain-pill px-3.5 py-1.5 rounded-full text-xs font-bold border border-ink bg-white text-ink hover:bg-mint">Frontend & Edge</button>
+            <button onclick="setDomainFilter('DevSecOps')" data-domain="DevSecOps" class="domain-pill px-3.5 py-1.5 rounded-full text-xs font-bold border border-ink bg-white text-ink hover:bg-mint">DevSecOps</button>
+          </div>
+        </div>
+
+        <!-- Technology Cards Grid -->
+        <div id="techCardsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- PAGE 3: ENTERPRISE INTELLIGENCE & RAG CONTEXTUALIZER (/enterprise-rag)-->
+      <!-- ===================================================================== -->
+      <section id="page-enterprise-rag" class="page-view hidden space-y-6">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span class="inline-block font-mono text-xs uppercase px-2.5 py-1 rounded-full bg-mint text-forest border border-ink mb-2">Stage 03 • Contextualize with Internal Knowledge</span>
+            <h1 class="font-display text-4xl sm:text-5xl text-ink">Enterprise Intelligence & RAG</h1>
+            <p class="text-sm text-ink-secondary mt-1 max-w-2xl">
+              Ground external technology discoveries against Apex's private architecture specs, security policies, and product roadmaps using pgvector semantic retrieval.
+            </p>
+          </div>
+        </div>
+
+        <!-- Master-Detail Split Layout (4 cols Documents / 8 cols RAG Contextual Analyzer) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          
+          <!-- Left 4 Columns: Company Knowledge Base Documents -->
+          <div class="lg:col-span-4 space-y-4">
+            <div class="sketch-card p-5 space-y-4">
+              <div class="flex items-center justify-between">
+                <h2 class="font-display text-2xl text-ink">Knowledge Base</h2>
+                <span id="docTotalChunksBadge" class="font-mono text-xs font-bold px-2.5 py-0.5 rounded-full bg-mint text-forest border border-ink">384 chunks</span>
+              </div>
+              <p class="text-xs text-ink-secondary">Organization-isolated documents indexed in Supabase <span class="font-mono">pgvector</span> (1536-dim) with RLS.</p>
+
+              <!-- Interactive Custom / Preset Spec Uploader -->
+              <div class="p-3.5 rounded-2xl border-2 border-dashed border-ink bg-tinted space-y-2.5">
+                <div class="text-xs font-bold text-ink flex items-center justify-between">
+                  <span>Ingest Architecture Spec</span>
+                  <span class="font-mono text-[10px] text-forest">POST /documents/upload</span>
+                </div>
+                <input type="text" id="customDocTitleInput" placeholder="Doc title (e.g., Fraud_Latency_SLA.md)" class="w-full px-2.5 py-1.5 rounded-xl bg-white border border-ink text-xs" />
+                <textarea id="customDocNotesInput" rows="2" placeholder="Optional architectural constraint or SLA quote..." class="w-full px-2.5 py-1.5 rounded-xl bg-white border border-ink text-xs resize-none"></textarea>
+                <button onclick="handleCustomDocumentUpload()" class="btn-primary w-full justify-center text-xs py-2">
+                  Chunk & Embed into pgvector
+                </button>
+              </div>
+
+              <!-- Live Chunking Progress Bar -->
+              <div id="ragUploadProgressWrap" class="hidden space-y-1">
+                <div class="flex justify-between font-mono text-[10px] font-bold text-forest">
+                  <span id="ragUploadProgressLabel">Generating 1536-dim embeddings...</span>
+                  <span id="ragUploadProgressPct">0%</span>
+                </div>
+                <div class="w-full h-2 rounded-full bg-tinted border border-ink overflow-hidden">
+                  <div id="ragUploadProgressBar" class="h-full bg-emerald transition-all duration-200" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <!-- Document List -->
+              <div id="companyDocsList" class="space-y-2.5">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right 8 Columns: Grounded RAG Contextual Analyzer -->
+          <div class="lg:col-span-8 space-y-5">
+            <div class="sketch-card p-5 sm:p-6">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-borderLight">
+                <div>
+                  <span class="font-mono text-[11px] uppercase text-ink-muted font-bold">Select Target Technology</span>
+                  <select id="ragTechSelector" onchange="runRagAnalysis(true)" class="mt-1 block w-full sm:w-80 px-3.5 py-2 rounded-xl bg-canvas border border-ink text-sm font-bold text-forest cursor-pointer">
+                    <!-- Populated by JS -->
+                  </select>
+                </div>
+                <button onclick="runRagAnalysis(true)" id="ragAnalyzeBtn" class="btn-primary text-sm self-start sm:self-end">
+                  <svg class="w-4 h-4 text-amber" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                  <span>Generate Grounded Assessment</span>
+                </button>
+              </div>
+
+              <!-- RAG Output Container -->
+              <div id="ragResultContainer" class="mt-5 space-y-5">
+                <!-- Populated dynamically by JS -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- PAGE 4: WORKFORCE SKILL INTELLIGENCE (/skill-intelligence)            -->
+      <!-- ===================================================================== -->
+      <section id="page-skill-intelligence" class="page-view hidden space-y-6">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span class="inline-block font-mono text-xs uppercase px-2.5 py-1 rounded-full bg-coral-soft text-coral-dark border border-ink mb-2">Stage 04 • Identify Skill Gaps</span>
+            <h1 class="font-display text-4xl sm:text-5xl text-ink">Workforce Skill Intelligence</h1>
+            <p class="text-sm text-ink-secondary mt-1 max-w-2xl">
+              Deterministic competency deltas (<span class="font-mono text-xs bg-tinted px-1.5 py-0.5 rounded border border-ink/20">Skill Gap = Required - Current</span>) distinguishing verified assessments from self-declared profiles.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <select id="skillProjectFilter" onchange="renderSkillIntelligence()" class="px-3.5 py-2 rounded-xl bg-white border border-ink text-xs font-bold text-ink shadow-sketch-sm cursor-pointer">
+              <option value="all">All Active Projects & Depts</option>
+              <option value="aegis">Project Aegis — Real-Time Fraud RAG</option>
+              <option value="gateway">Core Payment Gateway v4</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Top Skill Gap Delta Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4" id="skillGapCardsGrid">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Employee Readiness & Explainable Matching Table -->
+        <div class="sketch-card overflow-hidden">
+          <div class="p-5 border-b border-borderLight flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-tinted/50">
+            <div>
+              <h2 class="font-display text-2xl text-ink">Employee Competency & Match Matrix</h2>
+              <p class="text-xs text-ink-secondary">Scale: 1.0 (Novice) to 5.0 (Principal). Unverified skills are flagged and never treated as confirmed.</p>
+            </div>
+            <div class="flex items-center gap-2 text-[11px] font-mono">
+              <span class="px-2 py-1 rounded-md bg-mint text-emerald-dark border border-emerald/40 font-bold">● Assessed</span>
+              <span class="px-2 py-1 rounded-md bg-amber-soft text-amber-900 border border-amber/40 font-bold">● Demonstrated</span>
+              <span class="px-2 py-1 rounded-md bg-white text-ink-muted border border-ink/30">○ Self-Declared</span>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b-2 border-ink bg-tinted text-[11px] font-mono uppercase text-ink-secondary">
+                  <th class="py-3.5 px-4">Engineer & Role</th>
+                  <th class="py-3.5 px-4">Target Competency</th>
+                  <th class="py-3.5 px-4">Current vs Req</th>
+                  <th class="py-3.5 px-4">Evidence Source</th>
+                  <th class="py-3.5 px-4">Project Fit</th>
+                  <th class="py-3.5 px-4 text-right">Adaptive Action</th>
+                </tr>
+              </thead>
+              <tbody id="employeeSkillsTableBody" class="divide-y divide-borderLight text-sm">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- PAGE 5: ADAPTIVE UPSKILLING STUDIO (/upskilling-studio)               -->
+      <!-- ===================================================================== -->
+      <section id="page-upskilling-studio" class="page-view hidden space-y-6">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span class="inline-block font-mono text-xs uppercase px-2.5 py-1 rounded-full bg-mint text-forest border border-ink mb-2">Stage 05 • Upskill with Evidence</span>
+            <h1 class="font-display text-4xl sm:text-5xl text-ink">Adaptive Upskilling Studio</h1>
+            <p class="text-sm text-ink-secondary mt-1">
+              Personalized pathway for <strong id="studioLearnerName" class="text-forest">Ananya Deshmukh (Senior Backend Engineer)</strong> • Target: <span class="font-mono text-xs bg-amber-soft px-2 py-0.5 rounded border border-ink/30">Production RAG & pgvector Optimization</span>
+            </p>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="px-3.5 py-2 rounded-xl bg-white border border-ink shadow-sketch-sm flex items-center gap-2.5">
+              <span class="text-xs font-bold text-ink-secondary">Pathway Mastery:</span>
+              <span id="pathwayProgressPercent" class="font-mono text-sm font-bold text-emerald-dark">45%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12-Col Layout: 3 Cols Roadmap | 5 Cols Coding Challenge | 4 Cols AI Coding Mentor -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+          
+          <!-- Left 3 Cols: Personalized Roadmap Checklist -->
+          <div class="lg:col-span-3 sketch-card p-4 flex flex-col justify-between space-y-4">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <h2 class="font-display text-2xl text-ink">Learning Roadmap</h2>
+                <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-tinted border border-ink">3 Modules</span>
+              </div>
+              <div id="learningModulesList" class="space-y-2.5">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-tinted border border-ink text-xs space-y-1.5">
+              <div class="font-bold text-forest flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-emerald-dark" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Skill Reassessment Trigger
+              </div>
+              <p class="text-ink-secondary leading-relaxed">Passing Module 2 test cases updates <span class="font-mono text-[11px]">HNSW Tuning</span> from <strong>2.2 → 3.8</strong> (Assessed) in <span class="font-mono text-[11px]">EurekaDB</span>.</p>
+            </div>
+          </div>
+
+          <!-- Center 5 Cols: Interactive Coding Challenge Workspace -->
+          <div class="lg:col-span-5 sketch-card p-4 sm:p-5 flex flex-col justify-between space-y-4">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <span class="font-mono text-[11px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-amber-soft text-amber-900 border border-ink">Module 2 Lab • SQL / pgvector</span>
+                <span class="font-mono text-[11px] text-ink-muted">Plugin: Judge0SandboxAdapter</span>
+              </div>
+              <h3 class="font-bold text-base text-ink">Fix Filtered HNSW Recall Drop in Multi-Tenant Queries</h3>
+              <p class="text-xs text-ink-secondary leading-relaxed">
+                In <span class="font-mono">Project Aegis</span>, filtering by <span class="font-mono">org_id = 'org_apex_fintech'</span> after an HNSW vector scan returns fewer than <span class="font-mono">k=10</span> rows. Configure pgvector 0.8.0 iterative index scanning and set <span class="font-mono">hnsw.ef_search &gt;= 80</span> before querying.
+              </p>
+
+              <!-- Code Editor Textarea -->
+              <div class="rounded-xl border-2 border-ink overflow-hidden bg-[#13221B] text-white">
+                <div class="px-3 py-1.5 bg-forest border-b border-white/15 flex items-center justify-between text-[11px] font-mono">
+                  <span class="text-mint">query_fraud_vectors.sql</span>
+                  <span class="text-amber">PostgreSQL 16 + pgvector 0.8.0</span>
+                </div>
+                <textarea id="challengeCodeEditor" rows="9" spellcheck="false" class="w-full p-3.5 bg-[#13221B] text-mint font-mono text-xs leading-relaxed focus:outline-none resize-none">-- Enable iterative scan for filtered HNSW queries
+SET LOCAL hnsw.iterative_scan = 'off';
+SET LOCAL hnsw.ef_search = 40;
+
+SELECT chunk_id, doc_title, 1 - (embedding <=> $1) AS similarity
+FROM document_chunks
+WHERE org_id = 'org_apex_fintech'
+  AND classification = 'internal'
+ORDER BY embedding <=> $1
+LIMIT 10;</textarea>
+              </div>
+            </div>
+
+            <!-- Test Runner Output & Controls -->
+            <div class="space-y-3">
+              <div id="judge0OutputBox" class="p-3 rounded-xl bg-tinted border border-ink font-mono text-xs text-ink-secondary">
+                Ready to execute via POST /api/v1/sandbox/execute...
+              </div>
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <button onclick="resetChallengeCode()" class="btn-sketch text-xs py-2 px-3">Reset Starter</button>
+                <button onclick="runJudge0Tests()" class="btn-primary text-xs py-2.5 px-4">
+                  <svg class="w-3.5 h-3.5 text-amber" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  <span>Run Test Cases (Judge0)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right 4 Cols: Adaptive AI Coding Mentor -->
+          <div class="lg:col-span-4 sketch-card p-4 flex flex-col justify-between h-[560px]">
+            <div class="pb-3 border-b border-borderLight flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-xl bg-forest text-white flex items-center justify-center border border-ink">
+                  <svg class="w-4 h-4 text-amber" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <div>
+                  <h3 class="text-sm font-bold text-ink">AI Coding Mentor</h3>
+                  <p class="text-[10px] font-mono text-emerald-dark">GeminiLLMAdapter + WebSpeech</p>
+                </div>
+              </div>
+              <button onclick="toggleVoiceMentor()" id="voiceMentorBtn" class="px-2.5 py-1 rounded-full border border-ink bg-tinted text-[11px] font-mono font-bold text-ink hover:bg-mint flex items-center gap-1" title="Toggle Web Speech API TTS/STT">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+                <span id="voiceStatusLabel">Voice Off</span>
+              </button>
+            </div>
+
+            <!-- Chat Messages Feed -->
+            <div id="mentorChatFeed" class="flex-1 overflow-y-auto py-3 space-y-3 pr-1">
+              <div class="p-3 rounded-2xl rounded-tl-xs bg-tinted border border-ink/20 text-xs text-ink leading-relaxed">
+                <span class="font-mono text-[10px] font-bold text-forest block mb-1">EUREKA MENTOR (GEMINI 2.5)</span>
+                Hi Ananya! Look closely at line 2 in your SQL editor. In <strong>pgvector 0.8.0</strong>, post-filtering by <code class="bg-white px-1 rounded">org_id</code> starves the top-K results unless iterative scanning is enabled. Need a hint?
+              </div>
+            </div>
+
+            <!-- Quick Prompt Chips & Input -->
+            <div class="pt-2 border-t border-borderLight space-y-2">
+              <div class="flex flex-wrap gap-1.5">
+                <button onclick="askMentorPreset('Explain HNSW iterative_scan')" class="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-mint text-forest border border-ink/30 hover:bg-mint-dark">Explain iterative_scan</button>
+                <button onclick="askMentorPreset('Debug my SQL query')" class="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-amber-soft text-amber-900 border border-ink/30 hover:bg-amber/30">Debug my SQL</button>
+                <button onclick="askMentorPreset('Give me a hint')" class="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-tinted text-ink border border-ink/30 hover:bg-white">Give a hint</button>
+              </div>
+              <form onsubmit="handleMentorSubmit(event)" class="flex gap-2">
+                <input type="text" id="mentorInput" placeholder="Ask about HNSW, recall, or SQL..." class="flex-1 px-3 py-2 rounded-xl bg-canvas border border-ink text-xs focus:outline-none" />
+                <button type="submit" class="px-3.5 py-2 rounded-xl bg-forest text-white text-xs font-bold border border-ink hover:bg-forest-card">Send</button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- PAGE 6: TECHNOLOGY ADOPTION ADVISOR (/adoption-advisor)               -->
+      <!-- ===================================================================== -->
+      <section id="page-adoption-advisor" class="page-view hidden space-y-6">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span class="inline-block font-mono text-xs uppercase px-2.5 py-1 rounded-full bg-mint text-forest border border-ink mb-2">Stage 06 • Evidence-Backed Adoption</span>
+            <h1 class="font-display text-4xl sm:text-5xl text-ink">Technology Adoption Advisor</h1>
+            <p class="text-sm text-ink-secondary mt-1 max-w-2xl">
+              Interactive weighted decision engine evaluating candidate models, vector engines, and agent frameworks against latency, TCO, and SOC2 data residency.
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <select id="adoptionScenarioSelect" onchange="renderAdoptionComparison(true)" class="px-3.5 py-2 rounded-xl bg-white border border-ink text-xs font-bold text-ink shadow-sketch-sm cursor-pointer">
+              <option value="llm">Compare: Enterprise Reasoning & RAG LLMs</option>
+              <option value="vector">Compare: Production Vector Storage Engines</option>
+              <option value="agents">Compare: Agent & Tool Orchestration Frameworks</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Dynamic Priority Weight Sliders -->
+        <div class="sketch-tinted p-4 sm:p-5 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <div class="flex justify-between font-mono text-xs font-bold text-ink mb-1">
+              <span>Cost & TCO Efficiency</span>
+              <span id="weightCostVal" class="text-forest">40%</span>
+            </div>
+            <input type="range" id="weightCostSlider" min="10" max="80" value="40" oninput="updateAdoptionWeights()" class="w-full accent-forest cursor-pointer" />
+          </div>
+          <div>
+            <div class="flex justify-between font-mono text-xs font-bold text-ink mb-1">
+              <span>p95 Latency & Throughput</span>
+              <span id="weightLatencyVal" class="text-forest">35%</span>
+            </div>
+            <input type="range" id="weightLatencySlider" min="10" max="80" value="35" oninput="updateAdoptionWeights()" class="w-full accent-forest cursor-pointer" />
+          </div>
+          <div>
+            <div class="flex justify-between font-mono text-xs font-bold text-ink mb-1">
+              <span>VPC Privacy & Data Residency</span>
+              <span id="weightPrivacyVal" class="text-forest">25%</span>
+            </div>
+            <input type="range" id="weightPrivacySlider" min="10" max="80" value="25" oninput="updateAdoptionWeights()" class="w-full accent-forest cursor-pointer" />
+          </div>
+        </div>
+
+        <!-- Comparison Matrix Table -->
+        <div class="sketch-card overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse" id="adoptionMatrixTable">
+              <!-- Populated dynamically via JS -->
+            </table>
+          </div>
+        </div>
+
+        <!-- Evidence-Backed Adoption Recommendation Card -->
+        <div id="adoptionRecommendationBox" class="sketch-card p-6 bg-tinted border-2 border-ink">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- PAGE 7: WEEKLY TECHNOLOGY DIGEST & PREFERENCES (/weekly-digest)       -->
+      <!-- ===================================================================== -->
+      <section id="page-weekly-digest" class="page-view hidden space-y-6">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span class="inline-block font-mono text-xs uppercase px-2.5 py-1 rounded-full bg-amber-soft text-amber-900 border border-ink mb-2">Continuous Routine • Role-Personalized Brief</span>
+            <h1 class="font-display text-4xl sm:text-5xl text-ink">Weekly Technology Digest</h1>
+            <p class="text-sm text-ink-secondary mt-1">
+              Generated dynamically from top-ranked <span class="font-mono text-xs">EurekaDB</span> records and dispatched via <span class="font-mono text-xs">ResendEmailAdapter</span>.
+            </p>
+          </div>
+          <button onclick="sendTestDigestViaResend()" id="sendDigestBtn" class="btn-primary text-sm">
+            <svg class="w-4 h-4 text-amber" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <span>Send Test Digest via Resend Plugin</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          
+          <!-- Left 8 Cols: Editorial Newsletter Preview (Rendered dynamically from EurekaDB) -->
+          <div class="lg:col-span-8 sketch-card p-6 sm:p-8 bg-white">
+            <div class="border-b-2 border-ink pb-5 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-mono text-xs font-bold uppercase px-2 py-0.5 rounded bg-forest text-white">Issue #48</span>
+                  <span class="font-mono text-xs text-ink-muted">Nov 14, 2026 • Personalized for Backend & AI Leads</span>
+                </div>
+                <h2 class="font-display text-3xl sm:text-4xl text-ink">Eureka Weekly Tech Brief</h2>
+              </div>
+              <div class="text-left sm:text-right font-mono text-xs text-ink-secondary">
+                <div>Curated from <strong id="digestSourceCount">6</strong> verified records</div>
+                <div class="text-emerald-dark font-bold">100% Source-Verified</div>
+              </div>
+            </div>
+
+            <div class="space-y-6" id="weeklyDigestArticlesList">
+              <!-- Populated dynamically from EurekaDB -->
+            </div>
+          </div>
+
+          <!-- Right 4 Cols: Notification & Digest Preferences -->
+          <div class="lg:col-span-4 sketch-card p-5 space-y-5">
+            <div>
+              <h2 class="font-display text-2xl text-ink">Delivery & Alert Preferences</h2>
+              <p class="text-xs text-ink-secondary mt-1">Persisted via <span class="font-mono text-[11px]">PUT /api/v1/notifications/preferences</span>.</p>
+            </div>
+
+            <div class="space-y-4">
+              <div class="flex items-center justify-between p-3 rounded-xl bg-tinted border border-ink">
+                <div>
+                  <div class="text-xs font-bold text-ink">Weekly Email Newsletter</div>
+                  <div class="text-[11px] text-ink-muted">Sent via Resend every Monday</div>
+                </div>
+                <input type="checkbox" id="prefWeeklyEmail" checked onchange="saveNotificationPreferences()" class="w-4 h-4 accent-forest cursor-pointer" />
+              </div>
+
+              <div class="flex items-center justify-between p-3 rounded-xl bg-tinted border border-ink">
+                <div>
+                  <div class="text-xs font-bold text-ink">High-Impact Breaking Alerts</div>
+                  <div class="text-[11px] text-ink-muted">Immediate alert when RAG fit &gt; 90%</div>
+                </div>
+                <input type="checkbox" id="prefBreakingAlerts" checked onchange="saveNotificationPreferences()" class="w-4 h-4 accent-forest cursor-pointer" />
+              </div>
+
+              <div class="flex items-center justify-between p-3 rounded-xl bg-tinted border border-ink">
+                <div>
+                  <div class="text-xs font-bold text-ink">Skill Gap Pathway Reminders</div>
+                  <div class="text-[11px] text-ink-muted">Bi-weekly lab nudges for active modules</div>
+                </div>
+                <input type="checkbox" id="prefSkillReminders" checked onchange="saveNotificationPreferences()" class="w-4 h-4 accent-forest cursor-pointer" />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-ink mb-2">Subscribed Technology Domains</label>
+                <div class="flex flex-wrap gap-1.5" id="digestDomainChips">
+                  <button onclick="toggleDigestDomain(this, 'Vector & RAG')" class="px-2.5 py-1 rounded-full bg-forest text-white text-[11px] font-semibold border border-ink">Vector & RAG ✓</button>
+                  <button onclick="toggleDigestDomain(this, 'LLM & Agents')" class="px-2.5 py-1 rounded-full bg-forest text-white text-[11px] font-semibold border border-ink">LLM & Agents ✓</button>
+                  <button onclick="toggleDigestDomain(this, 'Backend & API')" class="px-2.5 py-1 rounded-full bg-forest text-white text-[11px] font-semibold border border-ink">Backend & API ✓</button>
+                  <button onclick="toggleDigestDomain(this, 'DevSecOps')" class="px-2.5 py-1 rounded-full bg-white text-ink text-[11px] font-semibold border border-ink hover:bg-mint">+ DevSecOps</button>
+                  <button onclick="toggleDigestDomain(this, 'Frontend & Edge')" class="px-2.5 py-1 rounded-full bg-white text-ink text-[11px] font-semibold border border-ink hover:bg-mint">+ Frontend</button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-ink mb-1.5">Digest Depth Mode</label>
+                <select id="prefDepthSelect" onchange="saveNotificationPreferences()" class="w-full px-3 py-2 rounded-xl bg-canvas border border-ink text-xs font-semibold text-ink">
+                  <option value="deep">Executive + Architect Deep-Dive (Recommended)</option>
+                  <option value="tldr">TL;DR Bullet Summary Only</option>
+                  <option value="code">Code & Migration Snippets Focus</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- TECHNOLOGY EXPLORER DETAIL MODAL (Slide-Over / Dialog)                -->
+  <!-- ===================================================================== -->
+  <div id="techDetailModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-ink/50 backdrop-blur-xs">
+    <div class="sketch-card w-full max-w-3xl max-h-[90vh] overflow-y-auto p-6 sm:p-7 bg-canvas relative">
+      <button onclick="closeTechDetail()" class="absolute top-5 right-5 w-9 h-9 rounded-xl bg-white border border-ink shadow-sketch-sm flex items-center justify-center hover:bg-coral-soft">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <div id="techDetailContent" class="space-y-5">
+        <!-- Populated dynamically via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- LIVE API, PLUGIN & TELEMETRY DRAWER                                   -->
+  <!-- ===================================================================== -->
+  <div id="telemetryDrawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-xl bg-canvas border-l-2 border-ink shadow-sketch-lg transform translate-x-full transition-transform duration-200 ease-out flex flex-col">
+    <div class="p-5 border-b-2 border-ink bg-forest text-white flex items-center justify-between">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald animate-pulse"></span>
+          <span class="font-mono text-xs uppercase tracking-wider text-amber font-bold">FastAPI Backend & Plugin Telemetry</span>
+        </div>
+        <h2 class="font-display text-2xl sm:text-3xl text-white mt-0.5">Live API & Integration Console</h2>
+      </div>
+      <button onclick="toggleTelemetryDrawer()" class="p-2 rounded-xl bg-forest-card border border-white/25 hover:border-amber text-white">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Drawer Tabs -->
+    <div class="px-5 pt-3 bg-tinted border-b border-ink flex items-center gap-2">
+      <button onclick="switchTelemetryTab('plugins')" id="tabBtnPlugins" class="px-3.5 py-2 rounded-t-xl border-t border-x border-ink bg-canvas text-xs font-bold text-forest -mb-px">
+        Provider Plugins (8)
+      </button>
+      <button onclick="switchTelemetryTab('logs')" id="tabBtnLogs" class="px-3.5 py-2 rounded-t-xl border-t border-x border-transparent text-xs font-bold text-ink-secondary hover:text-ink">
+        REST API Logs (<span id="drawerLogCount">0</span>)
+      </button>
+    </div>
+
+    <!-- Tab 1: Provider Plugins & Outage Fallback Toggles -->
+    <div id="telemetryTabPlugins" class="flex-1 overflow-y-auto p-5 space-y-3">
+      <p class="text-xs text-ink-secondary">
+        Toggle any adapter offline to verify Eureka's graceful fallback resilience (e.g., Gemini fallback to deterministic heuristic templates, or Resend queue buffering).
+      </p>
+      <div id="pluginsListContainer" class="space-y-2.5">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- Tab 2: Live REST API Request/Response Logs -->
+    <div id="telemetryTabLogs" class="hidden flex-1 overflow-y-auto p-5 space-y-3">
+      <div class="flex items-center justify-between">
+        <span class="font-mono text-[11px] text-ink-muted">Intercepting all /api/v1/* calls with RLS headers</span>
+        <button onclick="clearApiLogs()" class="text-xs font-bold text-coral underline">Clear Logs</button>
+      </div>
+      <div id="apiLogsContainer" class="space-y-2.5">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- NON-BLOCKING TOAST NOTIFICATION                                       -->
+  <!-- ===================================================================== -->
+  <div id="eurekaToast" class="fixed bottom-5 right-5 z-50 hidden items-center gap-3 px-4 py-3 rounded-2xl bg-forest text-white border-2 border-ink shadow-sketch-lg text-xs font-semibold max-w-sm">
+    <span class="w-2.5 h-2.5 rounded-full bg-amber flex-shrink-0"></span>
+    <span id="eurekaToastMsg">Notification message</span>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- CLIENT-SIDE BACKEND ENGINE, ADAPTERS, AGENTS & UI CONTROLLER          -->
+  <!-- ===================================================================== -->
+  <script>
+    // =========================================================================
+    // 1. PERSISTENT IN-MEMORY DATABASE (EurekaDB backed by localStorage)
+    // =========================================================================
+    const DB_STORAGE_KEY = 'eureka_enterprise_db_v1';
+
+    const DEFAULT_SEED_DATA = {
+      activeOrg: { id: 'org_apex_fintech', name: 'Apex FinTech Corp' },
+      technologies: [
+        {
+          id: 'pgvector-08',
+          name: 'pgvector 0.8.0',
+          tagline: 'Iterative HNSW index scans & parallel build acceleration for PostgreSQL',
+          domain: 'Vector & RAG',
+          source: 'GitHub',
+          license: 'PostgreSQL License',
+          noveltyScore: 94,
+          relevanceScore: 96,
+          velocity: '+1,420 ★/wk',
+          verifiedVia: 'Verified via Official Repo (pgvector/pgvector)',
+          repoUrl: 'https://github.com/pgvector/pgvector/releases/tag/v0.8.0',
+          docsUrl: 'https://github.com/pgvector/pgvector#iterative-index-scans',
+          previousProblem: 'When combining approximate nearest neighbor (HNSW/IVFFlat) searches with selective WHERE clauses (e.g., tenant or org_id isolation), PostgreSQL filtered results after scanning a fixed candidate pool, frequently returning fewer rows than LIMIT k.',
+          whatChanged: 'Introduced hnsw.iterative_scan (strict_order & relaxed_order) and ivfflat.iterative_scan, allowing the index to dynamically expand traversal batches until sufficient filtered tuples are found.',
+          howItWorks: 'During index traversal, if post-filter predicates discard candidates, the executor resumes graph navigation from the frontier priority queue up to hnsw.max_scan_tuples without falling back to a full sequential table scan.',
+          capabilities: [
+            'Zero-loss top-K recall on multi-tenant metadata-filtered vector queries',
+            'Up to 3.2x faster HNSW index builds via improved parallel worker memory sharing',
+            'Supports halfvec (fp16) and sparsevec indexing inside existing Supabase/RDS instances'
+          ],
+          limitations: 'High-selectivity filters (<0.1% match rate) still require composite B-tree partitioning or higher max_scan_tuples tuning to bound p99 tail latency.',
+          ragAssessment: {
+            fitScore: 96,
+            cosSim: 0.94,
+            relatedProjects: ['Project Aegis — Real-Time Fraud RAG', 'Core Payment Architecture v4'],
+            citations: [
+              { doc: 'Core_Payment_Architecture_v4.pdf', page: 'p. 12', sim: '0.94', quote: 'All transactional and semantic stores must run on managed PostgreSQL 16 with strict row-level org_id isolation to avoid cross-service data sprawl.' },
+              { doc: 'Q4_Product_Roadmap.md', page: 'Sec 3.1', sim: '0.91', quote: 'Sub-80ms semantic retrieval over 12M historical dispute records is a P0 blocker for Project Aegis.' }
+            ],
+            compatibility: 'Native drop-in upgrade on Apex’s existing Supabase PostgreSQL 16 cluster. Eliminates $2,400/mo external Pinecone cluster cost.',
+            costLatency: 'p95 query latency drops from 142ms to 38ms on filtered tenant queries; $0 incremental infrastructure spend.',
+            risks: 'Requires DBA maintenance window for ALTER EXTENSION vector UPDATE and REINDEX CONCURRENTLY on existing HNSW indexes.',
+            requiredSkills: ['Vector Indexing & HNSW Tuning', 'PostgreSQL Query Plan Diagnostics']
+          }
+        },
+        {
+          id: 'deepseek-r1-32b',
+          name: 'DeepSeek-R1-Distill-Qwen-32B',
+          tagline: 'Open-weights reasoning model distilled for single-node VPC inference',
+          domain: 'LLM & Agents',
+          source: 'Hugging Face',
+          license: 'Apache 2.0',
+          noveltyScore: 92,
+          relevanceScore: 91,
+          velocity: '418k downloads/wk',
+          verifiedVia: 'Verified via Official Model Card (Hugging Face)',
+          repoUrl: 'https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B',
+          docsUrl: 'https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B#evaluation',
+          previousProblem: 'Deploying multi-step reasoning models inside air-gapped financial VPCs previously required 70B+ parameter clusters across multi-GPU nodes, creating prohibitive hosting costs.',
+          whatChanged: 'Distilled chain-of-thought reasoning traces from R1 into the dense Qwen-2.5-32B architecture, preserving structured analytical reasoning within a 32B parameter footprint.',
+          howItWorks: 'Runs quantized (AWQ/FP8) on a single 80GB A100/H100 GPU via vLLM, emitting <think> verification steps before structured JSON schema outputs.',
+          capabilities: [
+            '94.3% MATH-500 & 72.6% LiveCodeBench accuracy on single-GPU VPC deployment',
+            'Full data residency with zero external token egress for PII/PCI workloads',
+            'Apache 2.0 permissive commercial license'
+          ],
+          limitations: 'Verbose chain-of-thought tokens increase time-to-first-token (TTFT) by ~650ms unless reasoning budget tokens are capped.',
+          ragAssessment: {
+            fitScore: 91,
+            cosSim: 0.92,
+            relatedProjects: ['Project Aegis — Real-Time Fraud RAG', 'Internal Compliance Auditor'],
+            citations: [
+              { doc: '2026_Cloud_Security_Policy.docx', page: 'Sec 4.2', sim: '0.92', quote: 'Raw PCI-DSS cardholder telemetry and unmasked PII must never traverse third-party SaaS LLM endpoints.' }
+            ],
+            compatibility: 'Compatible with Apex’s AWS EKS GPU node pool (g5.12xlarge / p4d) via vLLM OpenAI-compatible adapter.',
+            costLatency: 'Fixed ~$1,850/mo dedicated VPC GPU vs variable SaaS token fees; p95 latency 820ms for 512 output tokens.',
+            risks: 'Requires prompt-injection output sanitizers to strip untrusted <think> blocks before user display.',
+            requiredSkills: ['vLLM Quantized Serving', 'RAG Prompt-Injection Guardrails']
+          }
+        },
+        {
+          id: 'fastapi-mcp',
+          name: 'FastAPI Streamable MCP Adapter',
+          tagline: 'Expose Pydantic-typed FastAPI routes as permission-scoped MCP tools',
+          domain: 'Backend & API',
+          source: 'GitHub',
+          license: 'MIT License',
+          noveltyScore: 88,
+          relevanceScore: 87,
+          velocity: '+890 ★/wk',
+          verifiedVia: 'Verified via Official Repo & OpenAPI Spec',
+          repoUrl: 'https://github.com/tadata-org/fastapi_mcp',
+          docsUrl: 'https://modelcontextprotocol.io/specification',
+          previousProblem: 'Connecting internal REST microservices to AI assistants required maintaining duplicate tool schemas and custom auth wrappers.',
+          whatChanged: 'Automatically introspects FastAPI OpenAPI schemas and Pydantic models to mount streamable HTTP Model Context Protocol endpoints.',
+          howItWorks: 'Reuses existing FastAPI Depends() OAuth2/JWT security dependencies so AI tool invocations inherit exact user RBAC permissions.',
+          capabilities: [
+            'Zero-duplication Pydantic schema to MCP tool definition mapping',
+            'Preserves Supabase/JWT bearer token propagation per request',
+            'Supports streaming server-sent events (SSE) for long-running jobs'
+          ],
+          limitations: 'Complex nested union types in Pydantic v2 occasionally require explicit schema descriptions for reliable LLM tool selection.',
+          ragAssessment: {
+            fitScore: 87,
+            cosSim: 0.89,
+            relatedProjects: ['Eureka Internal Intelligence API', 'Merchant Ops Copilot'],
+            citations: [
+              { doc: 'Core_Payment_Architecture_v4.pdf', page: 'p. 6', sim: '0.89', quote: 'All internal service-to-service APIs are standardized on Python 3.12, FastAPI, and Pydantic v2.' }
+            ],
+            compatibility: '100% aligned with Apex’s FastAPI backend monolith.',
+            costLatency: '< 4ms serialization overhead per tool invocation; $0 licensing cost.',
+            risks: 'Must restrict exposed endpoints via explicit allow-list tags to prevent accidental mutation tool exposure.',
+            requiredSkills: ['FastAPI Async Architecture', 'RBAC Tool Scoping']
+          }
+        },
+        {
+          id: 'tailwind-v4-oxide',
+          name: 'Tailwind CSS v4.0 Oxide Engine',
+          tagline: 'Rust-powered CSS compiler with zero-config CSS-first theme tokens',
+          domain: 'Frontend & Edge',
+          source: 'RSS',
+          license: 'MIT License',
+          noveltyScore: 85,
+          relevanceScore: 83,
+          velocity: 'Official Release',
+          verifiedVia: 'Verified via Official Release Announcement',
+          repoUrl: 'https://github.com/tailwindlabs/tailwindcss',
+          docsUrl: 'https://tailwindcss.com/blog/tailwindcss-v4',
+          previousProblem: 'Large monorepo Vite builds spent 3–5 seconds parsing JavaScript tailwind.config.js files and scanning template ASTs.',
+          whatChanged: 'Rewrote core scanning and parsing in Rust (Oxide) with native CSS @theme variables and automatic content detection.',
+          howItWorks: 'Compiles incremental CSS changes in microseconds while exposing design tokens as standard browser CSS custom properties.',
+          capabilities: [
+            '5x faster full builds and >100x faster incremental HMR in Vite',
+            'Native CSS cascade layers and @theme design token inheritance',
+            'Zero JS configuration boilerplate'
+          ],
+          limitations: 'Legacy PostCSS plugins expecting JS theme() resolution require minor migration to CSS var() syntax.',
+          ragAssessment: {
+            fitScore: 83,
+            cosSim: 0.85,
+            relatedProjects: ['Merchant Portal v3', 'Eureka Frontend'],
+            citations: [
+              { doc: 'Q4_Product_Roadmap.md', page: 'Sec 5.2', sim: '0.85', quote: 'Reduce CI frontend build pipelines under 45 seconds across all 14 micro-frontends.' }
+            ],
+            compatibility: 'Direct upgrade for Vite + React 19 + TypeScript apps.',
+            costLatency: 'Cuts CI build minutes by ~38% across frontend repositories.',
+            risks: 'Low risk; incremental migration supported via @config compatibility directive.',
+            requiredSkills: ['Modern CSS Architecture', 'Vite Build Optimization']
+          }
+        },
+        {
+          id: 'judge0-ce-sandbox',
+          name: 'Judge0 Isolated Code Sandbox v1.13',
+          tagline: 'cgroups-isolated multi-language execution engine for skill verification',
+          domain: 'DevSecOps',
+          source: 'GitHub',
+          license: 'GPL-3.0 / Self-Hosted',
+          noveltyScore: 81,
+          relevanceScore: 85,
+          velocity: '+510 ★/wk',
+          verifiedVia: 'Verified via Official Repo (judge0/judge0)',
+          repoUrl: 'https://github.com/judge0/judge0',
+          docsUrl: 'https://ce.judge0.com/',
+          previousProblem: 'Evaluating untrusted employee or candidate code submissions inside backend API containers creates severe RCE and container-escape vulnerabilities.',
+          whatChanged: 'Hardened isolate sandboxing with strict cgroups v2 memory/CPU quotas, seccomp syscall filtering, and network namespace isolation.',
+          howItWorks: 'Spawns ephemeral Linux namespaces per submission, executes test assertions against stdin/stdout, and tears down the filesystem within milliseconds.',
+          capabilities: [
+            'Supports 60+ languages including Python, SQL, Rust, and TypeScript',
+            'Strict wall-time, memory, and syscall seccomp enforcement',
+            'Asynchronous webhook callbacks for non-blocking FastAPI integration'
+          ],
+          limitations: 'Requires privileged Linux host or nested virtualization support on Kubernetes worker nodes.',
+          ragAssessment: {
+            fitScore: 85,
+            cosSim: 0.90,
+            relatedProjects: ['Adaptive Upskilling Studio', 'Engineering Hiring Assessments'],
+            citations: [
+              { doc: '2026_Cloud_Security_Policy.docx', page: 'Sec 7.1', sim: '0.90', quote: 'Untrusted code execution must never occur on application servers; isolated kernel sandboxes are mandatory.' }
+            ],
+            compatibility: 'Deploys as an isolated node group in Apex’s EKS cluster.',
+            costLatency: '~180ms cold sandbox execution; ~$140/mo dedicated worker node.',
+            risks: 'Requires disabling outbound network interfaces on sandbox worker pods.',
+            requiredSkills: ['Kubernetes Pod Security & Seccomp']
+          }
+        },
+        {
+          id: 'llama-guard-3-8b',
+          name: 'Llama-Guard-3-8B Prompt Firewall',
+          tagline: 'Low-latency input/output classifier for RAG prompt injection defense',
+          domain: 'DevSecOps',
+          source: 'Hugging Face',
+          license: 'Llama 3 Community',
+          noveltyScore: 86,
+          relevanceScore: 89,
+          velocity: '290k downloads/wk',
+          verifiedVia: 'Verified via Official Model Card',
+          repoUrl: 'https://huggingface.co/meta-llama/Llama-Guard-3-8B',
+          docsUrl: 'https://llama.meta.com/docs/model-cards-and-prompt-formats/llama-guard-3/',
+          previousProblem: 'RAG pipelines ingesting external documents or user tickets are vulnerable to indirect prompt injections that exfiltrate system instructions.',
+          whatChanged: 'Fine-tuned 8B safety classifier covering 14 hazard categories and indirect prompt-injection patterns in retrieved context chunks.',
+          howItWorks: 'Runs as a pre-generation guardrail filter on retrieved pgvector chunks before assembling the final LLM prompt.',
+          capabilities: [
+            'Detects indirect prompt injection embedded inside PDF/Markdown chunks',
+            'Sub-45ms inference latency on quantized INT8 GPU instances',
+            'Structured hazard taxonomy output for audit logging'
+          ],
+          limitations: 'Requires custom domain threshold tuning to avoid false positives on security engineering documentation.',
+          ragAssessment: {
+            fitScore: 89,
+            cosSim: 0.93,
+            relatedProjects: ['Project Aegis — Real-Time Fraud RAG', 'Enterprise RAG Pipeline'],
+            citations: [
+              { doc: '2026_Cloud_Security_Policy.docx', page: 'Sec 4.5', sim: '0.93', quote: 'All RAG ingestion and retrieval pipelines must enforce automated prompt-injection detection prior to LLM synthesis.' }
+            ],
+            compatibility: 'Integrates directly into Eureka’s RAG Step 6 retrieval filter.',
+            costLatency: '+38ms pre-flight guardrail check per query.',
+            risks: 'High priority: addresses Apex’s #1 AppSec readiness gap.',
+            requiredSkills: ['RAG Prompt-Injection Guardrails']
+          }
+        }
+      ],
+      documents: [
+        {
+          id: 'doc-1',
+          name: 'Core_Payment_Architecture_v4.pdf',
+          type: 'PDF',
+          chunks: 142,
+          updated: '2 days ago',
+          classification: 'Confidential • Eng',
+          status: 'Embedded',
+          snippet: 'All transactional and semantic stores must run on managed PostgreSQL 16 with strict row-level org_id isolation.'
+        },
+        {
+          id: 'doc-2',
+          name: '2026_Cloud_Security_Policy.docx',
+          type: 'DOCX',
+          chunks: 164,
+          updated: '5 days ago',
+          classification: 'Restricted • InfoSec',
+          status: 'Embedded',
+          snippet: 'Raw PCI-DSS cardholder telemetry must never traverse third-party SaaS LLM endpoints; prompt-injection firewalls required.'
+        },
+        {
+          id: 'doc-3',
+          name: 'Q4_Product_Roadmap.md',
+          type: 'Markdown',
+          chunks: 78,
+          updated: '1 week ago',
+          classification: 'Internal • Product',
+          status: 'Embedded',
+          snippet: 'Sub-80ms semantic retrieval over 12M historical dispute records is a P0 blocker for Project Aegis.'
+        }
+      ],
+      skillGaps: [
+        {
+          id: 'gap-1',
+          skill: 'Vector Indexing & HNSW Tuning',
+          domain: 'Core Platform & AI',
+          project: 'aegis',
+          projectLabel: 'Project Aegis',
+          required: 4.0,
+          current: 2.2,
+          delta: -1.8,
+          affectedEngineers: 6,
+          severity: 'critical'
+        },
+        {
+          id: 'gap-2',
+          skill: 'RAG Prompt-Injection Guardrails',
+          domain: 'AppSec & Governance',
+          project: 'aegis',
+          projectLabel: 'Project Aegis',
+          required: 4.0,
+          current: 1.9,
+          delta: -2.1,
+          affectedEngineers: 5,
+          severity: 'critical'
+        },
+        {
+          id: 'gap-3',
+          skill: 'vLLM Quantized VPC Serving',
+          domain: 'AI Infrastructure',
+          project: 'aegis',
+          projectLabel: 'Project Aegis',
+          required: 3.5,
+          current: 2.3,
+          delta: -1.2,
+          affectedEngineers: 4,
+          severity: 'moderate'
+        },
+        {
+          id: 'gap-4',
+          skill: 'FastAPI Streamable MCP',
+          domain: 'Backend Systems',
+          project: 'gateway',
+          projectLabel: 'Payment Gateway v4',
+          required: 3.5,
+          current: 2.6,
+          delta: -0.9,
+          affectedEngineers: 7,
+          severity: 'moderate'
+        }
+      ],
+      employees: [
+        {
+          id: 'emp-1',
+          name: 'Ananya Deshmukh',
+          role: 'Senior Backend Engineer',
+          dept: 'Core Platform',
+          project: 'aegis',
+          targetSkill: 'Vector Indexing & HNSW Tuning',
+          currentProficiency: 2.2,
+          requiredProficiency: 4.0,
+          evidence: 'Assessed',
+          matchScore: 94,
+          pathwayStatus: 'In Progress (45%)'
+        },
+        {
+          id: 'emp-2',
+          name: 'Rohan Kulkarni',
+          role: 'ML Platform Engineer',
+          dept: 'AI & Data',
+          project: 'aegis',
+          targetSkill: 'vLLM Quantized VPC Serving',
+          currentProficiency: 2.5,
+          requiredProficiency: 3.5,
+          evidence: 'Demonstrated',
+          matchScore: 91,
+          pathwayStatus: 'Assigned'
+        },
+        {
+          id: 'emp-3',
+          name: 'Meera Nair',
+          role: 'Staff Security Engineer',
+          dept: 'AppSec',
+          project: 'aegis',
+          targetSkill: 'RAG Prompt-Injection Guardrails',
+          currentProficiency: 2.0,
+          requiredProficiency: 4.0,
+          evidence: 'Self-Declared',
+          matchScore: 88,
+          pathwayStatus: 'Recommended'
+        },
+        {
+          id: 'emp-4',
+          name: 'Vikramaditya Rao',
+          role: 'API Systems Lead',
+          dept: 'Backend Systems',
+          project: 'gateway',
+          targetSkill: 'FastAPI Streamable MCP',
+          currentProficiency: 2.8,
+          requiredProficiency: 3.5,
+          evidence: 'Assessed',
+          matchScore: 92,
+          pathwayStatus: 'Ready to Start'
+        }
+      ],
+      learningModules: [
+        {
+          id: 'mod-1',
+          num: '01',
+          title: 'HNSW Graph Internals & Distance Metrics',
+          duration: '35 mins',
+          status: 'completed',
+          summary: 'Cosine vs inner product (<=> vs <#>) and memory trade-offs for halfvec.'
+        },
+        {
+          id: 'mod-2',
+          num: '02',
+          title: 'Hybrid Semantic + BM25 & Iterative Scans',
+          duration: '45 mins',
+          status: 'active',
+          summary: 'Solving tenant post-filter starvation with pgvector 0.8.0 iterative_scan.'
+        },
+        {
+          id: 'mod-3',
+          num: '03',
+          title: 'RAG Prompt Injection & Output Guardrails',
+          duration: '40 mins',
+          status: 'locked',
+          summary: 'Sanitizing retrieved document chunks prior to Gemini/Qwen synthesis.'
+        }
+      ],
+      preferences: {
+        weeklyEmail: true,
+        breakingAlerts: true,
+        skillReminders: true,
+        domains: ['Vector & RAG', 'LLM & Agents', 'Backend & API'],
+        depth: 'deep'
+      }
+    };
+
+    class EurekaDatabase {
+      constructor() {
+        this.state = this.load();
+      }
+      load() {
+        try {
+          const raw = localStorage.getItem(DB_STORAGE_KEY);
+          if (raw) return JSON.parse(raw);
+        } catch (e) {
+          console.warn('EurekaDB fallback to memory store:', e);
+        }
+        return JSON.parse(JSON.stringify(DEFAULT_SEED_DATA));
+      }
+      save() {
+        try {
+          localStorage.setItem(DB_STORAGE_KEY, JSON.stringify(this.state));
+        } catch (e) {
+          console.warn('EurekaDB localStorage write skipped:', e);
+        }
+      }
+      reset() {
+        this.state = JSON.parse(JSON.stringify(DEFAULT_SEED_DATA));
+        this.save();
+        return this.state;
+      }
+    }
+
+    const EurekaDB = new EurekaDatabase();
+
+    // =========================================================================
+    // 2. PROVIDER ADAPTERS & PLUGINS LAYER (adapters/)
+    // =========================================================================
+    const PluginRegistry = {
+      github: {
+        id: 'github',
+        name: 'GitHubAdapter',
+        category: 'Discovery Source',
+        endpoint: 'api.github.com/search/repositories',
+        rateLimit: '4,890 / 5,000 req/hr',
+        latencyMs: 142,
+        enabled: true
+      },
+      huggingface: {
+        id: 'huggingface',
+        name: 'HuggingFaceAdapter',
+        category: 'Model & Dataset Radar',
+        endpoint: 'huggingface.co/api/models',
+        rateLimit: '980 / 1,000 req/hr',
+        latencyMs: 168,
+        enabled: true
+      },
+      reddit_rss: {
+        id: 'reddit_rss',
+        name: 'RedditRSSAdapter',
+        category: 'Community Signal (Non-Authoritative)',
+        endpoint: 'reddit.com/r/MachineLearning/.rss',
+        rateLimit: '58 / 60 req/min',
+        latencyMs: 215,
+        enabled: true
+      },
+      gemini: {
+        id: 'gemini',
+        name: 'GeminiLLMAdapter',
+        category: 'Semantic Reasoning & Mentor',
+        endpoint: 'generativelanguage.googleapis.com/v1beta',
+        rateLimit: '1,450 RPM • Gemini 2.5 Flash',
+        latencyMs: 310,
+        enabled: true
+      },
+      pgvector: {
+        id: 'pgvector',
+        name: 'PgVectorEmbeddingAdapter',
+        category: 'Supabase Vector Store (1536d)',
+        endpoint: 'db.supabase.co:5432/pgvector',
+        rateLimit: 'Unlimited (Pooled pgBouncer)',
+        latencyMs: 38,
+        enabled: true
+      },
+      judge0: {
+        id: 'judge0',
+        name: 'Judge0SandboxAdapter',
+        category: 'Isolated cgroups Execution',
+        endpoint: 'sandbox.internal.eks/submissions',
+        rateLimit: '20 concurrent workers',
+        latencyMs: 185,
+        enabled: true
+      },
+      resend: {
+        id: 'resend',
+        name: 'ResendEmailAdapter',
+        category: 'Transactional Digest Delivery',
+        endpoint: 'api.resend.com/emails',
+        rateLimit: '100 emails/sec',
+        latencyMs: 120,
+        enabled: true
+      },
+      webspeech: {
+        id: 'webspeech',
+        name: 'WebSpeechPlugin',
+        category: 'Browser STT / TTS Synthesis',
+        endpoint: 'window.speechSynthesis',
+        rateLimit: 'Native Browser API',
+        latencyMs: 15,
+        enabled: true
+      }
+    };
+
+    const INGESTABLE_TECH_POOL = [
+      {
+        id: 'qwen-25-coder-32b',
+        name: 'Qwen2.5-Coder-32B-Instruct',
+        tagline: 'Open-weights code generation & SQL refactoring checkpoint matching GPT-4o',
+        domain: 'LLM & Agents',
+        source: 'Hugging Face',
+        license: 'Apache 2.0',
+        noveltyScore: 93,
+        relevanceScore: 92,
+        velocity: '612k downloads/wk',
+        verifiedVia: 'Verified via Official Model Card (Qwen/Qwen2.5-Coder-32B)',
+        repoUrl: 'https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct',
+        docsUrl: 'https://qwenlm.github.io/blog/qwen2.5-coder-family/',
+        previousProblem: 'Internal developer IDE assistants relied on external cloud endpoints that could not inspect proprietary FinTech payment repositories.',
+        whatChanged: 'Trained on 5.5T tokens of source code and synthetic execution traces, achieving 92.7% HumanEval and strong SQL query optimization.',
+        howItWorks: 'Serves via vLLM with 32K context window inside Apex’s EKS GPU pool for zero-egress code review and SQL migration.',
+        capabilities: [
+          'Repository-level multi-file diff synthesis and SQL EXPLAIN optimization',
+          'Full Apache 2.0 commercial rights with zero external API telemetry',
+          'Native function-calling and JSON schema enforcement'
+        ],
+        limitations: 'Requires 24GB+ VRAM in INT4 quantization or 80GB A100 for full FP16 precision.',
+        ragAssessment: {
+          fitScore: 92,
+          cosSim: 0.93,
+          relatedProjects: ['Adaptive Upskilling Studio', 'Core Payment Architecture v4'],
+          citations: [
+            { doc: '2026_Cloud_Security_Policy.docx', page: 'Sec 4.2', sim: '0.93', quote: 'Proprietary source code and PCI schemas must stay inside Apex VPC boundaries.' }
+          ],
+          compatibility: 'Deploys alongside DeepSeek-R1 on existing vLLM EKS GPU workers.',
+          costLatency: 'p95 280ms code completion latency; shared GPU pool cost.',
+          risks: 'Enforce license header scanning on generated boilerplate.',
+          requiredSkills: ['vLLM Quantized Serving']
+        }
+      },
+      {
+        id: 'otel-genai-semconv',
+        name: 'OpenTelemetry GenAI Semantic Conventions v1.29',
+        tagline: 'Standardized vendor-neutral tracing for LLM tokens, latency, and RAG spans',
+        domain: 'DevSecOps',
+        source: 'GitHub',
+        license: 'Apache 2.0',
+        noveltyScore: 87,
+        relevanceScore: 88,
+        velocity: '+740 ★/wk',
+        verifiedVia: 'Verified via Official OTel Spec Repo',
+        repoUrl: 'https://github.com/open-telemetry/semantic-conventions',
+        docsUrl: 'https://opentelemetry.io/docs/specs/semconv/gen-ai/',
+        previousProblem: 'Tracking token cost, pgvector retrieval latency, and guardrail blocks across Gemini and vLLM required custom incompatible logging schemas.',
+        whatChanged: 'Ratified gen_ai.system, gen_ai.usage.input_tokens, and retrieval span attributes across Python OpenTelemetry SDKs.',
+        howItWorks: 'Instruments FastAPI middleware and LLM provider adapters to emit unified OTLP traces to Grafana Tempo & Prometheus.',
+        capabilities: [
+          'Unified cost-per-request and p99 TTFT dashboards across cloud & VPC models',
+          'Correlates pgvector retrieval latency with downstream LLM synthesis quality',
+          'Zero vendor lock-in'
+        ],
+        limitations: 'Prompt/completion payload capture must be disabled in production to avoid PII logging.',
+        ragAssessment: {
+          fitScore: 88,
+          cosSim: 0.90,
+          relatedProjects: ['Project Aegis — Real-Time Fraud RAG', 'Eureka Internal Intelligence API'],
+          citations: [
+            { doc: 'Core_Payment_Architecture_v4.pdf', page: 'p. 19', sim: '0.90', quote: 'All microservices must export OpenTelemetry OTLP traces with tenant-level attribution.' }
+          ],
+          compatibility: 'Drop-in instrumentation for Apex’s FastAPI + Prometheus stack.',
+          costLatency: '< 1.2ms async trace export overhead.',
+          risks: 'Configure redaction processors to strip raw user prompts from trace attributes.',
+          requiredSkills: ['FastAPI Async Architecture']
+        }
+      }
+    ];
+
+    // =========================================================================
+    // 3. VERSIONED REST API ROUTER & TELEMETRY LOGGER (/api/v1/...)
+    // =========================================================================
+    const apiLogs = [];
+
+    const apiClient = {
+      async request(method, endpoint, payload = null) {
+        const startTime = performance.now();
+        const latency = Math.floor(160 + Math.random() * 240);
+        await new Promise(r => setTimeout(r, latency));
+
+        const orgHeader = EurekaDB.state.activeOrg.id;
+        let status = 200;
+        let responseBody = {};
+        let pluginUsed = 'CoreFastAPIRouter';
+
+        try {
+          if (endpoint === '/api/v1/technologies' && method === 'GET') {
+            responseBody = { count: EurekaDB.state.technologies.length, items: EurekaDB.state.technologies };
+          } else if (endpoint === '/api/v1/technology/discovery/run' && method === 'POST') {
+            status = 202;
+            pluginUsed = 'GitHubAdapter + HuggingFaceAdapter + GeminiLLMAdapter';
+            responseBody = { job_id: `job_${Date.now().toString(36)}`, stages_executed: 7, status: 'COMPLETED' };
+          } else if (endpoint === '/api/v1/technologies/ingest' && method === 'POST') {
+            status = 201;
+            pluginUsed = PluginRegistry.github.enabled ? 'GitHubAdapter + HuggingFaceAdapter' : 'FallbackCachedAdapter';
+            responseBody = payload;
+          } else if (endpoint === '/api/v1/documents/upload' && method === 'POST') {
+            status = 201;
+            pluginUsed = PluginRegistry.pgvector.enabled ? 'PgVectorEmbeddingAdapter (1536d)' : 'FallbackKeywordChunker';
+            responseBody = payload;
+          } else if (endpoint === '/api/v1/enterprise/analyze' && method === 'POST') {
+            pluginUsed = PluginRegistry.gemini.enabled ? 'PgVectorEmbeddingAdapter + GeminiLLMAdapter' : 'DeterministicRuleFallback';
+            responseBody = payload;
+          } else if (endpoint === '/api/v1/skills/gaps' && method === 'GET') {
+            responseBody = { gaps: EurekaDB.state.skillGaps, employees: EurekaDB.state.employees };
+          } else if (endpoint === '/api/v1/learning/paths' && method === 'POST') {
+            status = 201;
+            pluginUsed = 'GeminiLLMAdapter';
+            responseBody = payload;
+          } else if (endpoint === '/api/v1/sandbox/execute' && method === 'POST') {
+            pluginUsed = PluginRegistry.judge0.enabled ? 'Judge0SandboxAdapter' : 'LocalASTVerifierFallback';
+            responseBody = payload;
+          } else if (endpoint === '/api/v1/learning/mentor/chat' && method === 'POST') {
+            pluginUsed = PluginRegistry.gemini.enabled ? 'GeminiLLMAdapter (2.5 Flash)' : 'StaticHintFallback';
+            responseBody = payload;
+          } else if (endpoint === '/api/v1/adoption/compare' && method === 'POST') {
+            pluginUsed = 'AdoptionScoringService';
+            responseBody = payload;
+          } else if (endpoint === '/api/v1/digests/dispatch' && method === 'POST') {
+            status = 202;
+            pluginUsed = PluginRegistry.resend.enabled ? 'ResendEmailAdapter' : 'LocalOutboxBuffer';
+            responseBody = payload;
+          } else if (endpoint === '/api/v1/notifications/preferences' && method === 'PUT') {
+            responseBody = EurekaDB.state.preferences;
+          } else if (endpoint.startsWith('/api/v1/agents/') && method === 'POST') {
+            status = 202;
+            pluginUsed = 'AgenticOrchestrator (Preview)';
+            responseBody = payload;
+          }
+        } catch (err) {
+          status = 500;
+          responseBody = { error: err.message };
+        }
+
+        const elapsed = Math.round(performance.now() - startTime);
+        const logEntry = {
+          id: `req_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+          timestamp: new Date().toLocaleTimeString(),
+          method,
+          endpoint,
+          status,
+          latencyMs: elapsed,
+          orgHeader,
+          pluginUsed,
+          payload: payload || { query: 'default' },
+          responsePreview: responseBody
+        };
+
+        apiLogs.unshift(logEntry);
+        if (apiLogs.length > 40) apiLogs.pop();
+        updateTelemetryUI(logEntry);
+
+        return { status, data: responseBody, meta: logEntry };
+      }
+    };
+
+    function updateTelemetryUI(latestLog) {
+      const count = apiLogs.length;
+      const mobileCounter = document.getElementById('mobileApiCount');
+      const sidebarCounter = document.getElementById('sidebarApiCount');
+      const topBarCounter = document.getElementById('topBarApiCounter');
+      const drawerCounter = document.getElementById('drawerLogCount');
+      const topBarLast = document.getElementById('topBarLastEndpoint');
+
+      if (mobileCounter) mobileCounter.textContent = count;
+      if (sidebarCounter) sidebarCounter.textContent = `${count} calls`;
+      if (topBarCounter) topBarCounter.textContent = count;
+      if (drawerCounter) drawerCounter.textContent = count;
+      if (topBarLast && latestLog) {
+        topBarLast.textContent = `${latestLog.method} ${latestLog.endpoint} • ${latestLog.status} OK (${latestLog.latencyMs}ms) • X-Org-ID: ${latestLog.orgHeader}`;
+      }
+
+      renderApiLogsList();
+    }
+
+    // =========================================================================
+    // 4. TELEMETRY DRAWER & PROVIDER PLUGINS MANAGER
+    // =========================================================================
+    function toggleTelemetryDrawer() {
+      const drawer = document.getElementById('telemetryDrawer');
+      drawer.classList.toggle('translate-x-full');
+      renderPluginsList();
+      renderApiLogsList();
+    }
+
+    function switchTelemetryTab(tab) {
+      const pluginsView = document.getElementById('telemetryTabPlugins');
+      const logsView = document.getElementById('telemetryTabLogs');
+      const btnPlugins = document.getElementById('tabBtnPlugins');
+      const btnLogs = document.getElementById('tabBtnLogs');
+
+      if (tab === 'plugins') {
+        pluginsView.classList.remove('hidden');
+        logsView.classList.add('hidden');
+        btnPlugins.className = 'px-3.5 py-2 rounded-t-xl border-t border-x border-ink bg-canvas text-xs font-bold text-forest -mb-px';
+        btnLogs.className = 'px-3.5 py-2 rounded-t-xl border-t border-x border-transparent text-xs font-bold text-ink-secondary hover:text-ink';
+      } else {
+        pluginsView.classList.add('hidden');
+        logsView.classList.remove('hidden');
+        btnLogs.className = 'px-3.5 py-2 rounded-t-xl border-t border-x border-ink bg-canvas text-xs font-bold text-forest -mb-px';
+        btnPlugins.className = 'px-3.5 py-2 rounded-t-xl border-t border-x border-transparent text-xs font-bold text-ink-secondary hover:text-ink';
+      }
+    }
+
+    function renderPluginsList() {
+      const container = document.getElementById('pluginsListContainer');
+      if (!container) return;
+      const plugins = Object.values(PluginRegistry);
+      const activeCount = plugins.filter(p => p.enabled).length;
+      const kpiPlugins = document.getElementById('kpiActivePluginsCount');
+      if (kpiPlugins) kpiPlugins.textContent = `${activeCount}/${plugins.length}`;
+
+      container.innerHTML = plugins.map(p => `
+        <div class="p-3.5 rounded-2xl bg-white border border-ink space-y-2">
+          <div class="flex items-center justify-between gap-2">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs font-bold text-ink">${p.name}</span>
+                <span class="font-mono text-[10px] px-2 py-0.5 rounded-full ${p.enabled ? 'bg-mint text-emerald-dark border border-emerald/40' : 'bg-coral-soft text-coral-dark border border-coral'}">
+                  ${p.enabled ? '● ONLINE' : '✕ SIMULATED OUTAGE'}
+                </span>
+              </div>
+              <div class="text-[11px] text-ink-secondary mt-0.5">${p.category}</div>
+            </div>
+            <label class="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-mono font-bold">
+              <input type="checkbox" ${p.enabled ? 'checked' : ''} onchange="togglePluginHealth('${p.id}')" class="w-4 h-4 accent-forest cursor-pointer" />
+              <span>Active</span>
+            </label>
+          </div>
+          <div class="flex items-center justify-between text-[11px] font-mono text-ink-muted pt-1.5 border-t border-borderLight">
+            <span>${p.rateLimit}</span>
+            <button onclick="testPluginPing('${p.id}')" class="text-forest underline font-bold hover:text-emerald-dark">Test Sync ↗</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function togglePluginHealth(pluginId) {
+      const plugin = PluginRegistry[pluginId];
+      plugin.enabled = !plugin.enabled;
+      renderPluginsList();
+      showToast(
+        plugin.enabled
+          ? `${plugin.name} restored ONLINE`
+          : `${plugin.name} set OFFLINE — Eureka graceful fallback activated`
+      );
+    }
+
+    async function testPluginPing(pluginId) {
+      const plugin = PluginRegistry[pluginId];
+      await apiClient.request('POST', `/api/v1/plugins/${pluginId}/ping`, { adapter: plugin.name, check: 'health' });
+      showToast(`${plugin.name} pinged (${plugin.enabled ? plugin.latencyMs + 'ms OK' : 'Fallback Active'})`);
+    }
+
+    function renderApiLogsList() {
+      const container = document.getElementById('apiLogsContainer');
+      if (!container) return;
+      if (apiLogs.length === 0) {
+        container.innerHTML = `<div class="p-4 rounded-xl bg-tinted border border-ink text-xs text-ink-muted">No API requests logged yet.</div>`;
+        return;
+      }
+      container.innerHTML = apiLogs.map(log => `
+        <div class="p-3 rounded-xl bg-white border border-ink font-mono text-[11px] space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-forest">${log.method} ${log.endpoint}</span>
+            <span class="px-1.5 py-0.5 rounded bg-mint text-emerald-dark font-bold">${log.status} • ${log.latencyMs}ms</span>
+          </div>
+          <div class="text-[10px] text-ink-secondary flex justify-between">
+            <span>Plugin: ${log.pluginUsed}</span>
+            <span>${log.timestamp}</span>
+          </div>
+          <details class="text-[10px] text-ink-muted">
+            <summary class="cursor-pointer font-bold text-ink hover:text-forest">Inspect JSON Payload & RLS Header</summary>
+            <pre class="mt-1.5 p-2 rounded bg-[#13221B] text-mint overflow-x-auto">${JSON.stringify({ headers: { 'X-Org-ID': log.orgHeader }, payload: log.payload }, null, 2)}</pre>
+          </details>
+        </div>
+      `).join('');
+    }
+
+    function clearApiLogs() {
+      apiLogs.length = 0;
+      updateTelemetryUI(null);
+    }
+
+    // =========================================================================
+    // 5. AGENTIC AI ORCHESTRATOR (Multi-Step Tool Calls & Human Approval Gate)
+    // =========================================================================
+    let pendingAgentAction = null;
+
+    function toggleAgenticPanel() {
+      const panel = document.getElementById('agenticOrchestratorPanel');
+      panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      showToast('Agentic Orchestrator ready — select an autonomous workflow');
+    }
+
+    function appendAgentTrace(stepLabel, detail, colorClass = 'text-mint') {
+      const consoleEl = document.getElementById('agentTraceConsole');
+      const line = document.createElement('div');
+      line.className = 'leading-relaxed border-b border-white/10 pb-1.5';
+      line.innerHTML = `<span class="text-amber font-bold">[${stepLabel}]</span> <span class="${colorClass}">${detail}</span>`;
+      consoleEl.appendChild(line);
+      consoleEl.scrollTop = consoleEl.scrollHeight;
+    }
+
+    async function launchAgentWorkflow(agentType) {
+      const consoleEl = document.getElementById('agentTraceConsole');
+      const gateBox = document.getElementById('agentPendingActionBox');
+      consoleEl.innerHTML = '';
+      pendingAgentAction = null;
+
+      await apiClient.request('POST', `/api/v1/agents/${agentType}/run`, { org_id: EurekaDB.state.activeOrg.id });
+
+      if (agentType === 'research') {
+        appendAgentTrace('STEP 1 • PLANNER', 'Decomposing task: Discover & cross-verify emerging FinTech/AI developer tools...');
+        await new Promise(r => setTimeout(r, 350));
+        appendAgentTrace('STEP 2 • TOOL CALL', 'Calling GitHubAdapter + HuggingFaceAdapter for high-velocity Apache-2.0/MIT releases...');
+        await new Promise(r => setTimeout(r, 400));
+        appendAgentTrace('STEP 3 • VERIFIER', 'Cross-checking claims against official model cards & filtering social hype (Confidence: 0.94)...', 'text-emerald');
+        await new Promise(r => setTimeout(r, 350));
+
+        const candidate = INGESTABLE_TECH_POOL.find(c => !EurekaDB.state.technologies.some(t => t.id === c.id)) || INGESTABLE_TECH_POOL[0];
+        appendAgentTrace('STEP 4 • GATE', `Staged "${candidate.name}" (${candidate.relevanceScore}% RAG fit) for Architect Approval.`, 'text-amber');
+
+        pendingAgentAction = {
+          type: 'ingest_tech',
+          data: candidate,
+          summary: `Publish curated brief for "${candidate.name}" (${candidate.domain}) into Technology Hub.`
+        };
+      } else if (agentType === 'rag_auditor') {
+        appendAgentTrace('STEP 1 • RETRIEVER', 'Querying PgVectorEmbeddingAdapter across 384 company chunks (cosine threshold > 0.85)...');
+        await new Promise(r => setTimeout(r, 380));
+        appendAgentTrace('STEP 2 • POLICY CHECK', 'Cross-referencing 2026_Cloud_Security_Policy.docx Sec 4.2 & 4.5 with GeminiLLMAdapter...');
+        await new Promise(r => setTimeout(r, 380));
+        appendAgentTrace('STEP 3 • AUDITOR', 'Flagged indirect prompt-injection risk in multi-tenant RAG; recommending Llama-Guard-3-8B firewall (Confidence: 0.91).', 'text-emerald');
+
+        pendingAgentAction = {
+          type: 'open_rag',
+          techId: 'llama-guard-3-8b',
+          summary: 'Open Grounded Enterprise RAG Security Assessment for Llama-Guard-3-8B.'
+        };
+      } else if (agentType === 'curriculum') {
+        appendAgentTrace('STEP 1 • ANALYZER', 'Inspecting Ananya Deshmukh skill delta: Vector Indexing & HNSW Tuning (2.2 vs 4.0 required)...');
+        await new Promise(r => setTimeout(r, 380));
+        appendAgentTrace('STEP 2 • GENERATOR', 'Synthesizing SQL iterative_scan lab & Judge0 test assertions via GeminiLLMAdapter...');
+        await new Promise(r => setTimeout(r, 380));
+        appendAgentTrace('STEP 3 • READY', 'Staged interactive coding challenge in Adaptive Upskilling Studio (Confidence: 0.96).', 'text-emerald');
+
+        pendingAgentAction = {
+          type: 'open_studio',
+          summary: 'Launch Module 2 HNSW Iterative Scan Lab in Adaptive Upskilling Studio.'
+        };
+      }
+
+      gateBox.className = 'p-3 rounded-xl bg-amber-soft/60 border border-ink space-y-2.5';
+      gateBox.innerHTML = `
+        <div class="text-xs font-bold text-ink">${pendingAgentAction.summary}</div>
+        <div class="flex gap-2">
+          <button onclick="approvePendingAgentAction()" class="btn-primary text-xs py-1.5 px-3 flex-1 justify-center">Approve & Execute</button>
+          <button onclick="rejectPendingAgentAction()" class="btn-sketch text-xs py-1.5 px-2.5">Dismiss</button>
+        </div>
+      `;
+    }
+
+    async function approvePendingAgentAction() {
+      if (!pendingAgentAction) return;
+      const action = pendingAgentAction;
+      pendingAgentAction = null;
+
+      const gateBox = document.getElementById('agentPendingActionBox');
+      gateBox.className = 'p-3 rounded-xl bg-mint border border-ink text-xs font-bold text-forest';
+      gateBox.textContent = '✓ Approved & committed to EurekaDB.';
+
+      if (action.type === 'ingest_tech') {
+        if (!EurekaDB.state.technologies.some(t => t.id === action.data.id)) {
+          EurekaDB.state.technologies.unshift(action.data);
+          EurekaDB.save();
+          await apiClient.request('POST', '/api/v1/technologies/ingest', { id: action.data.id, source: 'AgenticResearcher' });
+        }
+        refreshAllDynamicViews();
+        showToast(`Agent committed "${action.data.name}" to Technology Hub!`);
+      } else if (action.type === 'open_rag') {
+        jumpToRagWithTech(action.techId);
+      } else if (action.type === 'open_studio') {
+        navigateTo('upskilling-studio');
+      }
+    }
+
+    function rejectPendingAgentAction() {
+      pendingAgentAction = null;
+      const gateBox = document.getElementById('agentPendingActionBox');
+      gateBox.className = 'p-3 rounded-xl bg-canvas border border-dashed border-ink text-xs text-ink-muted';
+      gateBox.textContent = 'Agent proposal dismissed by user.';
+      showToast('Agent staged proposal discarded');
+    }
+
+    // =========================================================================
+    // 6. NAVIGATION, WORKSPACE & RESET HELPERS
+    // =========================================================================
+    let currentDomainFilter = 'All';
+    let selectedRagTechId = 'pgvector-08';
+    let voiceEnabled = false;
+
+    function navigateTo(pageId) {
+      document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById(`page-${pageId}`);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.nav-item').forEach(btn => {
+        if (btn.getAttribute('data-nav') === pageId) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('mobileOverlay');
+      if (!sidebar.classList.contains('-translate-x-full') && window.innerWidth < 1024) {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleMobileNav() {
+      document.getElementById('sidebar').classList.toggle('-translate-x-full');
+      document.getElementById('mobileOverlay').classList.toggle('hidden');
+    }
+
+    async function handleOrgChange(val) {
+      const [id, name] = val.split('|');
+      EurekaDB.state.activeOrg = { id, name };
+      EurekaDB.save();
+      document.getElementById('dashboardOrgLabel').textContent = `${name} — Engineering & L&D`;
+      document.getElementById('activeOrgHeaderCode').textContent = id;
+      await apiClient.request('GET', '/api/v1/technologies', { org_id: id });
+      showToast(`Switched RLS tenant context to ${name} (${id})`);
+    }
+
+    function resetMockDatabase() {
+      EurekaDB.reset();
+      refreshAllDynamicViews();
+      showToast('EurekaDB reset to clean initial seed state');
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('eurekaToast');
+      const msgEl = document.getElementById('eurekaToastMsg');
+      msgEl.textContent = message;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 3400);
+    }
+
+    // =========================================================================
+    // 7. DASHBOARD & 7-STAGE PIPELINE RUNNER
+    // =========================================================================
+    const PIPELINE_STAGES = [
+      { id: 1, name: 'Scout', desc: '148 raw records' },
+      { id: 2, name: 'Normalize', desc: 'Shared schema' },
+      { id: 3, name: 'Validate', desc: 'Hype filtered' },
+      { id: 4, name: 'Deduplicate', desc: '64 merged' },
+      { id: 5, name: 'Verify', desc: 'Repo/Docs proof' },
+      { id: 6, name: 'Research', desc: 'Claims mapped' },
+      { id: 7, name: 'Curate', desc: 'Briefs live' }
+    ];
+
+    function renderPipelineStages(activeStep = -1) {
+      const grid = document.getElementById('pipelineStagesGrid');
+      grid.innerHTML = PIPELINE_STAGES.map((stage, idx) => {
+        const isRunning = idx === activeStep;
+        const isPending = activeStep !== -1 && idx > activeStep;
+        let bgClass = 'bg-white border-ink';
+        let badgeHtml = `<span class="text-emerald-dark font-bold">✓</span>`;
+
+        if (isRunning) {
+          bgClass = 'bg-amber-soft border-ink ring-2 ring-amber';
+          badgeHtml = `<span class="text-amber-900 animate-pulse font-bold">●</span>`;
+        } else if (isPending) {
+          bgClass = 'bg-canvas border-ink/30 opacity-60';
+          badgeHtml = `<span class="text-ink-muted">○</span>`;
+        }
+
+        return `
+          <div class="p-2.5 rounded-xl border ${bgClass} transition-all">
+            <div class="flex items-center justify-between font-mono text-[11px] font-bold">
+              <span>0${stage.id}. ${stage.name}</span>
+              ${badgeHtml}
+            </div>
+            <div class="text-[11px] text-ink-secondary mt-1 truncate">${stage.desc}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function runDiscoveryPipeline() {
+      const btn = document.getElementById('runPipelineBtn');
+      const statusText = document.getElementById('pipelineStatusText');
+      btn.disabled = true;
+      btn.classList.add('opacity-75');
+
+      await apiClient.request('POST', '/api/v1/technology/discovery/run', { sources: ['github', 'huggingface', 'reddit', 'rss'] });
+
+      let step = 0;
+      statusText.textContent = 'Running multi-source discovery pipeline across GitHub, Hugging Face & RSS...';
+      renderPipelineStages(step);
+
+      const interval = setInterval(() => {
+        step++;
+        if (step < PIPELINE_STAGES.length) {
+          renderPipelineStages(step);
+          statusText.textContent = `Stage 0${step + 1}/07 (${PIPELINE_STAGES[step].name}): Processing normalized technology candidates...`;
+        } else {
+          clearInterval(interval);
+          renderPipelineStages(-1);
+          btn.disabled = false;
+          btn.classList.remove('opacity-75');
+
+          // Ingest next available tech if not already ingested
+          const candidate = INGESTABLE_TECH_POOL.find(c => !EurekaDB.state.technologies.some(t => t.id === c.id));
+          if (candidate) {
+            EurekaDB.state.technologies.unshift(candidate);
+            EurekaDB.save();
+            refreshAllDynamicViews();
+            statusText.textContent = `Just completed • Curated "${candidate.name}" (${EurekaDB.state.technologies.length} verified records)`;
+            showToast(`Discovery Pipeline complete: "${candidate.name}" added to Hub!`);
+          } else {
+            statusText.textContent = `Just completed • All ${EurekaDB.state.technologies.length} records deduplicated & verified`;
+            showToast('Discovery Pipeline completed: all sources up to date');
+          }
+        }
+      }, 360);
+    }
+
+    function updateDashboardKPIs() {
+      const techs = EurekaDB.state.technologies;
+      const docs = EurekaDB.state.documents;
+      const gaps = EurekaDB.state.skillGaps;
+
+      const highMatches = techs.filter(t => t.relevanceScore >= 85).length;
+      const totalChunks = docs.reduce((acc, d) => acc + d.chunks, 0);
+
+      document.getElementById('kpiTrackedCount').textContent = techs.length;
+      document.getElementById('sidebarTechCountBadge').textContent = techs.length;
+      document.getElementById('kpiHighMatchCount').textContent = highMatches;
+      document.getElementById('kpiDocChunksCount').textContent = totalChunks;
+      document.getElementById('kpiSkillGapCount').textContent = gaps.length;
+      document.getElementById('sidebarGapCountBadge').textContent = `${gaps.length} Gaps`;
+    }
+
+    function renderDashboardAlerts() {
+      const container = document.getElementById('dashboardAlertsList');
+      const topThree = EurekaDB.state.technologies.slice(0, 3);
+      container.innerHTML = topThree.map(tech => `
+        <div class="sketch-card sketch-card-hover p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="space-y-1.5">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-mono text-xs font-bold px-2.5 py-0.5 rounded-full bg-mint text-forest border border-ink">
+                RAG FIT: ${tech.relevanceScore}%
+              </span>
+              <span class="font-mono text-[11px] px-2 py-0.5 rounded-md bg-tinted text-ink-secondary border border-ink/20">
+                ${tech.source} • ${tech.domain}
+              </span>
+              <span class="font-mono text-[11px] text-emerald-dark font-semibold">✓ Claim-Verified</span>
+            </div>
+            <h3 class="font-bold text-lg text-ink hover:text-forest cursor-pointer" onclick="openTechDetail('${tech.id}')">${tech.name}</h3>
+            <p class="text-xs sm:text-sm text-ink-secondary">${tech.tagline}</p>
+          </div>
+          <div class="flex sm:flex-col items-center sm:items-end gap-2 flex-shrink-0">
+            <button onclick="jumpToRagWithTech('${tech.id}')" class="btn-primary text-xs py-2 px-4 whitespace-nowrap">
+              Inspect RAG Fit
+            </button>
+            <button onclick="openTechDetail('${tech.id}')" class="text-xs font-bold text-ink-secondary hover:text-ink underline underline-offset-2">
+              Explore Brief
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // =========================================================================
+    // 8. TECHNOLOGY HUB, INGESTION PLUGIN & EXPLORER MODAL
+    // =========================================================================
+    async function ingestNewTechViaPlugin() {
+      const candidate = INGESTABLE_TECH_POOL.find(c => !EurekaDB.state.technologies.some(t => t.id === c.id));
+      if (!candidate) {
+        showToast('All live GitHub/HuggingFace feed candidates are already ingested!');
+        return;
+      }
+
+      await apiClient.request('POST', '/api/v1/technologies/ingest', {
+        candidate_id: candidate.id,
+        source: candidate.source
+      });
+
+      EurekaDB.state.technologies.unshift(candidate);
+      EurekaDB.save();
+      refreshAllDynamicViews();
+      showToast(`Ingested & verified "${candidate.name}" via ${candidate.source} Adapter!`);
+    }
+
+    function setDomainFilter(domain) {
+      currentDomainFilter = domain;
+      document.querySelectorAll('.domain-pill').forEach(pill => {
+        if (pill.getAttribute('data-domain') === domain) {
+          pill.classList.remove('bg-white', 'text-ink');
+          pill.classList.add('bg-forest', 'text-white', 'shadow-sketch-sm');
+        } else {
+          pill.classList.add('bg-white', 'text-ink');
+          pill.classList.remove('bg-forest', 'text-white', 'shadow-sketch-sm');
+        }
+      });
+      filterTechnologies();
+    }
+
+    function filterTechnologies() {
+      const query = document.getElementById('techSearchInput').value.toLowerCase().trim();
+      const sourceFilter = document.getElementById('techSourceFilter').value;
+
+      const filtered = EurekaDB.state.technologies.filter(t => {
+        const matchesDomain = currentDomainFilter === 'All' || t.domain === currentDomainFilter;
+        const matchesSource = sourceFilter === 'All' || t.source === sourceFilter;
+        const matchesQuery = !query ||
+          t.name.toLowerCase().includes(query) ||
+          t.tagline.toLowerCase().includes(query) ||
+          t.domain.toLowerCase().includes(query) ||
+          t.license.toLowerCase().includes(query);
+        return matchesDomain && matchesSource && matchesQuery;
+      });
+
+      document.getElementById('techCountLabel').textContent = filtered.length;
+      const grid = document.getElementById('techCardsGrid');
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full sketch-tinted p-8 text-center">
+            <p class="font-display text-2xl text-ink">No verified technologies match your filter</p>
+            <p class="text-xs text-ink-secondary mt-1">Try clearing your search query or switching domain pills.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(tech => `
+        <div class="sketch-card sketch-card-hover p-5 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between gap-2">
+              <span class="font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-tinted text-ink border border-ink">${tech.domain}</span>
+              <span class="font-mono text-xs font-bold text-emerald-dark bg-mint px-2 py-0.5 rounded-md border border-emerald/30">Novelty ${tech.noveltyScore}/100</span>
+            </div>
+
+            <div>
+              <h3 class="font-bold text-lg text-ink leading-snug">${tech.name}</h3>
+              <p class="text-xs text-ink-secondary mt-1 leading-relaxed">${tech.tagline}</p>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5 text-[11px] font-mono">
+              <span class="px-2 py-0.5 rounded bg-canvas border border-ink/25 text-ink">Source: ${tech.source}</span>
+              <span class="px-2 py-0.5 rounded bg-canvas border border-ink/25 text-ink">${tech.velocity}</span>
+              <span class="px-2 py-0.5 rounded bg-amber-soft/70 border border-amber/40 text-amber-950">${tech.license}</span>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-borderLight space-y-2.5">
+            <div class="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-dark">
+              <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="truncate">${tech.verifiedVia}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="openTechDetail('${tech.id}')" class="btn-sketch flex-1 justify-center text-xs py-2">
+                Explore Brief
+              </button>
+              <button onclick="jumpToRagWithTech('${tech.id}')" class="btn-primary flex-1 justify-center text-xs py-2">
+                RAG Fit (${tech.relevanceScore}%)
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openTechDetail(techId) {
+      const tech = EurekaDB.state.technologies.find(t => t.id === techId) || EurekaDB.state.technologies[0];
+      const modal = document.getElementById('techDetailModal');
+      const content = document.getElementById('techDetailContent');
+
+      content.innerHTML = `
+        <div class="pr-8">
+          <div class="flex flex-wrap items-center gap-2 mb-2">
+            <span class="font-mono text-xs font-bold px-2.5 py-0.5 rounded-full bg-mint text-forest border border-ink">${tech.domain}</span>
+            <span class="font-mono text-xs px-2.5 py-0.5 rounded-full bg-amber-soft text-amber-900 border border-ink">${tech.license}</span>
+            <span class="font-mono text-xs text-emerald-dark font-bold">✓ ${tech.verifiedVia}</span>
+          </div>
+          <h2 class="font-display text-3xl sm:text-4xl text-ink">${tech.name}</h2>
+          <p class="text-sm text-ink-secondary mt-1">${tech.tagline}</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 rounded-2xl bg-white border border-ink">
+            <div class="font-mono text-[11px] font-bold uppercase text-coral mb-1">Previous Problem</div>
+            <p class="text-xs text-ink-secondary leading-relaxed">${tech.previousProblem}</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-mint/50 border border-ink">
+            <div class="font-mono text-[11px] font-bold uppercase text-forest mb-1">What Changed</div>
+            <p class="text-xs text-ink leading-relaxed">${tech.whatChanged}</p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-white border border-ink space-y-2">
+          <div class="font-mono text-[11px] font-bold uppercase text-ink-muted">How It Works</div>
+          <p class="text-xs sm:text-sm text-ink leading-relaxed">${tech.howItWorks}</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 rounded-2xl bg-white border border-ink">
+            <div class="font-mono text-[11px] font-bold uppercase text-emerald-dark mb-2">Main Capabilities</div>
+            <ul class="space-y-1.5 text-xs text-ink">
+              ${tech.capabilities.map(c => `<li class="flex items-start gap-2"><span class="text-emerald-dark font-bold">✓</span><span>${c}</span></li>`).join('')}
+            </ul>
+          </div>
+          <div class="p-4 rounded-2xl bg-amber-soft/40 border border-ink">
+            <div class="font-mono text-[11px] font-bold uppercase text-amber-900 mb-2">Known Limitations & Caveats</div>
+            <p class="text-xs text-ink leading-relaxed">${tech.limitations}</p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-tinted border border-ink flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="space-y-1 text-xs">
+            <div class="font-mono font-bold text-ink">Authoritative Provenance:</div>
+            <div class="flex flex-wrap gap-3">
+              <a href="${tech.repoUrl}" target="_blank" rel="noopener" class="text-forest underline font-semibold">Official Repository ↗</a>
+              <a href="${tech.docsUrl}" target="_blank" rel="noopener" class="text-forest underline font-semibold">Technical Documentation ↗</a>
+            </div>
+          </div>
+          <button onclick="closeTechDetail(); jumpToRagWithTech('${tech.id}')" class="btn-primary text-xs">
+            Run Enterprise RAG Analysis →
+          </button>
+        </div>
+      `;
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeTechDetail() {
+      document.getElementById('techDetailModal').classList.add('hidden');
+      document.getElementById('techDetailModal').classList.remove('flex');
+    }
+
+    function jumpToRagWithTech(techId) {
+      selectedRagTechId = techId;
+      navigateTo('enterprise-rag');
+      const selector = document.getElementById('ragTechSelector');
+      if (selector) selector.value = techId;
+      runRagAnalysis(true);
+    }
+
+    // =========================================================================
+    // 9. ENTERPRISE INTELLIGENCE & RAG CONTEXTUALIZER
+    // =========================================================================
+    function renderCompanyDocs() {
+      const list = document.getElementById('companyDocsList');
+      const docs = EurekaDB.state.documents;
+      const totalChunks = docs.reduce((sum, d) => sum + d.chunks, 0);
+      document.getElementById('docTotalChunksBadge').textContent = `${totalChunks} chunks`;
+
+      list.innerHTML = docs.map(doc => `
+        <div class="p-3 rounded-xl bg-canvas border border-ink space-y-1">
+          <div class="flex items-center gap-1.5">
+            <span class="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-forest text-white">${doc.type}</span>
+            <span class="text-xs font-bold text-ink truncate">${doc.name}</span>
+          </div>
+          <div class="flex items-center justify-between font-mono text-[11px] text-ink-secondary">
+            <span class="text-emerald-dark font-semibold">● ${doc.status} • ${doc.chunks} chunks</span>
+            <span>${doc.updated}</span>
+          </div>
+          <div class="text-[10px] text-ink-muted">${doc.classification}</div>
+        </div>
+      `).join('');
+    }
+
+    async function handleCustomDocumentUpload() {
+      const titleInput = document.getElementById('customDocTitleInput');
+      const notesInput = document.getElementById('customDocNotesInput');
+      const title = titleInput.value.trim() || `Fraud_Latency_SLA_${EurekaDB.state.documents.length + 1}.md`;
+      const snippet = notesInput.value.trim() || 'P0 requirement: All vector similarity lookups must enforce sub-50ms p95 latency with strict tenant RLS.';
+
+      const progressWrap = document.getElementById('ragUploadProgressWrap');
+      const progressBar = document.getElementById('ragUploadProgressBar');
+      const progressPct = document.getElementById('ragUploadProgressPct');
+      const progressLabel = document.getElementById('ragUploadProgressLabel');
+
+      progressWrap.classList.remove('hidden');
+      progressBar.style.width = '30%';
+      progressPct.textContent = '30%';
+      progressLabel.textContent = 'Extracting & chunking document...';
+
+      await new Promise(r => setTimeout(r, 250));
+      progressBar.style.width = '75%';
+      progressPct.textContent = '75%';
+      progressLabel.textContent = 'Generating 1536-dim pgvector embeddings...';
+
+      const newChunks = Math.floor(48 + Math.random() * 65);
+      const ext = title.split('.').pop().toUpperCase();
+      const docType = ['PDF', 'DOCX', 'MD'].includes(ext) ? (ext === 'MD' ? 'Markdown' : ext) : 'Markdown';
+
+      const newDoc = {
+        id: `doc-${Date.now()}`,
+        name: title,
+        type: docType,
+        chunks: newChunks,
+        updated: 'Just now',
+        classification: 'Confidential • Architecture',
+        status: 'Embedded',
+        snippet
+      };
+
+      await apiClient.request('POST', '/api/v1/documents/upload', { filename: title, chunks: newChunks });
+
+      progressBar.style.width = '100%';
+      progressPct.textContent = '100%';
+      progressLabel.textContent = 'Indexed in Supabase pgvector!';
+
+      EurekaDB.state.documents.unshift(newDoc);
+      EurekaDB.save();
+
+      titleInput.value = '';
+      notesInput.value = '';
+
+      setTimeout(() => {
+        progressWrap.classList.add('hidden');
+        progressBar.style.width = '0%';
+      }, 900);
+
+      refreshAllDynamicViews();
+      showToast(`Embedded "${title}" (+${newChunks} pgvector chunks)`);
+      runRagAnalysis(true);
+    }
+
+    function populateRagSelector() {
+      const sel = document.getElementById('ragTechSelector');
+      if (!sel) return;
+      sel.innerHTML = EurekaDB.state.technologies.map(t => `<option value="${t.id}">${t.name} (${t.domain})</option>`).join('');
+      if (EurekaDB.state.technologies.some(t => t.id === selectedRagTechId)) {
+        sel.value = selectedRagTechId;
+      }
+    }
+
+    async function runRagAnalysis(callApi = false) {
+      const sel = document.getElementById('ragTechSelector');
+      if (sel && sel.value) selectedRagTechId = sel.value;
+
+      const tech = EurekaDB.state.technologies.find(t => t.id === selectedRagTechId) || EurekaDB.state.technologies[0];
+      const rag = tech.ragAssessment;
+      const container = document.getElementById('ragResultContainer');
+
+      if (callApi) {
+        await apiClient.request('POST', '/api/v1/enterprise/analyze', {
+          technology_id: tech.id,
+          top_k: 5,
+          gemini_active: PluginRegistry.gemini.enabled
+        });
+      }
+
+      const fallbackNotice = !PluginRegistry.gemini.enabled
+        ? `<div class="p-3 rounded-xl bg-amber-soft border border-ink text-xs font-bold text-amber-950">⚠ GeminiLLMAdapter is currently OFFLINE — displaying deterministic rule-based & cached pgvector citations.</div>`
+        : '';
+
+      const latestDoc = EurekaDB.state.documents[0];
+      const dynamicCitation = latestDoc && !rag.citations.some(c => c.doc === latestDoc.name)
+        ? [{ doc: latestDoc.name, page: 'Sec 1.1', sim: '0.92', quote: latestDoc.snippet }]
+        : [];
+      const allCitations = [...dynamicCitation, ...rag.citations];
+
+      container.innerHTML = `
+        ${fallbackNotice}
+        <!-- Fit Score Banner -->
+        <div class="p-4 rounded-2xl bg-mint border border-ink flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="font-mono text-[11px] font-bold uppercase text-forest">Grounded Organizational Relevance</div>
+            <h3 class="font-display text-2xl text-ink mt-0.5">${tech.name} × ${EurekaDB.state.activeOrg.name}</h3>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="px-3 py-1.5 rounded-xl bg-white text-forest font-mono text-xs font-bold border border-ink">
+              ${rag.cosSim || '0.91'} cos_sim
+            </span>
+            <div class="px-3.5 py-1.5 rounded-xl bg-forest text-white font-mono text-xs font-bold border border-ink shadow-sketch-sm">
+              Fit: ${rag.fitScore}/100
+            </div>
+          </div>
+        </div>
+
+        <!-- Retrieved Company Document Citations -->
+        <div class="space-y-2.5">
+          <div class="font-mono text-xs font-bold uppercase text-ink-secondary">Retrieved Evidence Chunks (pgvector Cosine Top-K)</div>
+          ${allCitations.map(c => `
+            <div class="p-3.5 rounded-xl bg-tinted border border-ink space-y-1">
+              <div class="flex items-center justify-between font-mono text-[11px]">
+                <span class="font-bold text-forest">[Source: ${c.doc}, ${c.page}]</span>
+                <span class="px-2 py-0.5 rounded bg-mint text-emerald-dark font-bold border border-emerald/30">${c.sim || '0.91'} cos_sim</span>
+              </div>
+              <p class="text-xs text-ink italic leading-relaxed">"${c.quote}"</p>
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- Structured Grounded Output Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 rounded-xl bg-white border border-ink space-y-1.5">
+            <div class="font-mono text-[11px] font-bold uppercase text-forest">Related Internal Projects</div>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              ${rag.relatedProjects.map(p => `<span class="px-2.5 py-1 rounded-full bg-mint text-forest text-xs font-bold border border-ink/30">${p}</span>`).join('')}
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-white border border-ink space-y-1">
+            <div class="font-mono text-[11px] font-bold uppercase text-forest">Infrastructure Compatibility</div>
+            <p class="text-xs text-ink-secondary leading-relaxed">${rag.compatibility}</p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-white border border-ink space-y-1">
+            <div class="font-mono text-[11px] font-bold uppercase text-emerald-dark">Cost & Latency Impact</div>
+            <p class="text-xs text-ink-secondary leading-relaxed">${rag.costLatency}</p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-amber-soft/50 border border-ink space-y-1">
+            <div class="font-mono text-[11px] font-bold uppercase text-amber-900">Operational & Security Risks</div>
+            <p class="text-xs text-ink leading-relaxed">${rag.risks}</p>
+          </div>
+        </div>
+
+        <!-- Required Skills & Next Step CTA -->
+        <div class="p-4 rounded-2xl bg-forest text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="font-mono text-[11px] uppercase text-amber font-bold">Required Team Competencies</div>
+            <div class="text-xs text-white/90 mt-1">
+              ${rag.requiredSkills.join('  •  ')}
+            </div>
+          </div>
+          <button onclick="navigateTo('skill-intelligence'); showToast('Mapped required skills to Workforce Skill-Gap Matrix')" class="px-4 py-2.5 rounded-full bg-amber text-ink font-bold text-xs border border-ink shadow-sketch-sm hover:bg-amber/90 whitespace-nowrap">
+            Generate Skill Gap & Upskilling Plan →
+          </button>
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 10. WORKFORCE SKILL INTELLIGENCE
+    // =========================================================================
+    function renderSkillIntelligence() {
+      const filterEl = document.getElementById('skillProjectFilter');
+      const filter = filterEl ? filterEl.value : 'all';
+      const gaps = EurekaDB.state.skillGaps;
+      const emps = EurekaDB.state.employees;
+
+      const filteredGaps = filter === 'all' ? gaps : gaps.filter(g => g.project === filter);
+      const filteredEmps = filter === 'all' ? emps : emps.filter(e => e.project === filter);
+
+      const gapGrid = document.getElementById('skillGapCardsGrid');
+      gapGrid.innerHTML = filteredGaps.map(g => {
+        const delta = +(g.current - g.required).toFixed(1);
+        const isCritical = delta <= -1.5;
+        return `
+          <div class="sketch-card p-4 space-y-3">
+            <div class="flex items-center justify-between gap-2">
+              <span class="font-mono text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-tinted border border-ink/30">${g.projectLabel}</span>
+              <span class="font-mono text-xs font-bold px-2 py-0.5 rounded-full ${isCritical ? 'bg-coral-soft text-coral-dark border border-coral' : 'bg-mint text-forest border border-ink/30'}">
+                ${delta < 0 ? 'Gap ' + delta.toFixed(1) : 'Target Met'}
+              </span>
+            </div>
+            <h3 class="font-bold text-sm text-ink leading-snug">${g.skill}</h3>
+            <div class="space-y-1">
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-ink-secondary">Avg: <strong>${g.current.toFixed(1)}</strong></span>
+                <span class="text-forest">Req: <strong>${g.required.toFixed(1)}</strong></span>
+              </div>
+              <div class="w-full h-2.5 rounded-full bg-tinted border border-ink overflow-hidden relative">
+                <div class="h-full ${isCritical ? 'bg-coral' : 'bg-emerald'}" style="width: ${Math.min(100, (g.current / 5) * 100)}%"></div>
+              </div>
+            </div>
+            <div class="text-[11px] text-ink-muted font-medium">${g.affectedEngineers} engineers tracked in cohort</div>
+          </div>
+        `;
+      }).join('');
+
+      const tbody = document.getElementById('employeeSkillsTableBody');
+      tbody.innerHTML = filteredEmps.map(emp => {
+        let evidenceBadge = '';
+        if (emp.evidence === 'Assessed') {
+          evidenceBadge = `<span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded-md bg-mint text-emerald-dark border border-emerald/40">● Assessed</span>`;
+        } else if (emp.evidence === 'Demonstrated') {
+          evidenceBadge = `<span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-soft text-amber-900 border border-amber/40">● Demonstrated</span>`;
+        } else {
+          evidenceBadge = `<span class="font-mono text-[11px] px-2 py-0.5 rounded-md bg-white text-ink-muted border border-ink/30">○ Self-Declared</span>`;
+        }
+
+        const delta = (emp.currentProficiency - emp.requiredProficiency).toFixed(1);
+
+        return `
+          <tr class="hover:bg-tinted/40 transition">
+            <td class="py-3.5 px-4">
+              <div class="font-bold text-ink">${emp.name}</div>
+              <div class="text-xs text-ink-muted">${emp.role} • ${emp.dept}</div>
+            </td>
+            <td class="py-3.5 px-4">
+              <div class="text-xs font-bold text-ink">${emp.targetSkill}</div>
+              <div class="font-mono text-[11px] ${parseFloat(delta) < 0 ? 'text-coral' : 'text-emerald-dark'} font-semibold">Delta: ${delta}</div>
+            </td>
+            <td class="py-3.5 px-4 font-mono text-xs">
+              <span class="font-bold text-ink">${emp.currentProficiency.toFixed(1)}</span>
+              <span class="text-ink-muted"> / ${emp.requiredProficiency.toFixed(1)}</span>
+            </td>
+            <td class="py-3.5 px-4">${evidenceBadge}</td>
+            <td class="py-3.5 px-4">
+              <span class="font-mono text-xs font-bold px-2.5 py-1 rounded-full bg-mint text-forest border border-ink/30">
+                ${emp.matchScore}% Match
+              </span>
+            </td>
+            <td class="py-3.5 px-4 text-right">
+              <button onclick="assignPathwayToEmployee('${emp.id}')" class="btn-primary text-xs py-1.5 px-3.5">
+                Assign Pathway →
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function assignPathwayToEmployee(empId) {
+      const emp = EurekaDB.state.employees.find(e => e.id === empId);
+      if (!emp) return;
+
+      emp.pathwayStatus = 'Active in Studio';
+      EurekaDB.save();
+
+      await apiClient.request('POST', '/api/v1/learning/paths', {
+        employee_id: emp.id,
+        target_skill: emp.targetSkill
+      });
+
+      document.getElementById('studioLearnerName').textContent = `${emp.name} (${emp.role})`;
+      renderSkillIntelligence();
+      navigateTo('upskilling-studio');
+      showToast(`Created personalized learning path for ${emp.name} in EurekaDB`);
+    }
+
+    // =========================================================================
+    // 11. ADAPTIVE UPSKILLING STUDIO (JUDGE0 SANDBOX & AI MENTOR)
+    // =========================================================================
+    function renderLearningModules() {
+      const list = document.getElementById('learningModulesList');
+      const modules = EurekaDB.state.learningModules;
+      const completedCount = modules.filter(m => m.status === 'completed').length;
+      const pct = Math.round((completedCount / modules.length) * 100);
+      const pctEl = document.getElementById('pathwayProgressPercent');
+      if (pctEl) pctEl.textContent = `${pct}%`;
+
+      list.innerHTML = modules.map((mod, idx) => {
+        let statusStyle = 'bg-white border-ink';
+        let icon = '<span class="font-mono text-xs font-bold text-ink-muted">○</span>';
+        if (mod.status === 'completed') {
+          statusStyle = 'bg-mint/70 border-ink';
+          icon = '<span class="font-mono text-xs font-bold text-emerald-dark">✓</span>';
+        } else if (mod.status === 'active') {
+          statusStyle = 'bg-amber-soft/70 border-ink shadow-sketch-sm';
+          icon = '<span class="font-mono text-xs font-bold text-amber-900">▶</span>';
+        }
+
+        return `
+          <div onclick="toggleModuleCompletion(${idx})" class="p-3 rounded-xl border ${statusStyle} space-y-1 cursor-pointer hover:opacity-95 transition">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[10px] font-bold uppercase text-ink-secondary">Module ${mod.num} • ${mod.duration}</span>
+              ${icon}
+            </div>
+            <div class="text-xs font-bold text-ink leading-snug">${mod.title}</div>
+            <p class="text-[11px] text-ink-secondary leading-relaxed">${mod.summary}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleModuleCompletion(idx) {
+      const mods = EurekaDB.state.learningModules;
+      mods[idx].status = mods[idx].status === 'completed' ? 'active' : 'completed';
+      EurekaDB.save();
+      renderLearningModules();
+      showToast(`Updated Module ${mods[idx].num} status to ${mods[idx].status}`);
+    }
+
+    function resetChallengeCode() {
+      document.getElementById('challengeCodeEditor').value = `-- Enable iterative scan for filtered HNSW queries
+SET LOCAL hnsw.iterative_scan = 'off';
+SET LOCAL hnsw.ef_search = 40;
+
+SELECT chunk_id, doc_title, 1 - (embedding <=> $1) AS similarity
+FROM document_chunks
+WHERE org_id = 'org_apex_fintech'
+  AND classification = 'internal'
+ORDER BY embedding <=> $1
+LIMIT 10;`;
+      document.getElementById('judge0OutputBox').className = 'p-3 rounded-xl bg-tinted border border-ink font-mono text-xs text-ink-secondary';
+      document.getElementById('judge0OutputBox').innerHTML = 'Starter code restored. Ready for POST /api/v1/sandbox/execute.';
+    }
+
+    async function runJudge0Tests() {
+      const code = document.getElementById('challengeCodeEditor').value.toLowerCase();
+      const outBox = document.getElementById('judge0OutputBox');
+
+      await apiClient.request('POST', '/api/v1/sandbox/execute', {
+        language: 'postgresql-16-pgvector',
+        source_length: code.length
+      });
+
+      const hasIterativeOn = code.includes("hnsw.iterative_scan = 'strict_order'") ||
+                             code.includes("hnsw.iterative_scan = 'relaxed_order'") ||
+                             code.includes("hnsw.iterative_scan = 'on'") ||
+                             code.includes("hnsw.iterative_scan = strict_order") ||
+                             code.includes("hnsw.iterative_scan = relaxed_order");
+
+      const efMatch = code.match(/hnsw\.ef_search\s*=\s*(\d+)/);
+      const efVal = efMatch ? parseInt(efMatch[1], 10) : 40;
+
+      if (hasIterativeOn && efVal >= 80) {
+        outBox.className = 'p-3 rounded-xl bg-mint border border-ink font-mono text-xs text-forest space-y-1';
+        outBox.innerHTML = `
+          <div class="font-bold text-emerald-dark">✓ ALL 3 ASSERTIONS PASSED (34ms in Judge0 Sandbox)</div>
+          <div>[PASS] Test 1: Multi-tenant filter returned 10/10 rows</div>
+          <div>[PASS] Test 2: Recall@10 = 0.98 (ef_search=${efVal})</div>
+          <div>[PASS] Test 3: Index Scan used (no Seq Scan fallback)</div>
+        `;
+
+        // Update EurekaDB module progress & employee assessed proficiency
+        EurekaDB.state.learningModules[1].status = 'completed';
+        EurekaDB.state.learningModules[2].status = 'active';
+        const ananya = EurekaDB.state.employees.find(e => e.id === 'emp-1');
+        if (ananya) {
+          ananya.currentProficiency = 3.8;
+          ananya.evidence = 'Assessed';
+          ananya.pathwayStatus = 'Completed (78%)';
+        }
+        const hnswGap = EurekaDB.state.skillGaps.find(g => g.id === 'gap-1');
+        if (hnswGap) {
+          hnswGap.current = 3.8;
+          hnswGap.severity = 'moderate';
+        }
+        EurekaDB.save();
+
+        document.getElementById('deptCoreScore').textContent = '94% Ready';
+        document.getElementById('deptCoreBar').style.width = '94%';
+
+        refreshAllDynamicViews();
+        showToast('Module 2 Passed! Ananya’s HNSW Tuning updated to 3.8 (Assessed) in EurekaDB');
+      } else {
+        outBox.className = 'p-3 rounded-xl bg-coral-soft/70 border border-ink font-mono text-xs text-coral-dark space-y-1';
+        outBox.innerHTML = `
+          <div class="font-bold">✕ 2 ASSERTIONS FAILED (Judge0 Exit Code 1)</div>
+          <div>${hasIterativeOn ? '[PASS]' : '[FAIL]'} Test 1: Returned only 3/10 rows (set hnsw.iterative_scan = \'relaxed_order\' or \'strict_order\')</div>
+          <div>${efVal >= 80 ? '[PASS]' : '[FAIL]'} Test 2: Recall@10 was 0.61 (increase hnsw.ef_search >= 80)</div>
+        `;
+      }
+    }
+
+    function appendMentorMessage(sender, text) {
+      const feed = document.getElementById('mentorChatFeed');
+      const isUser = sender === 'user';
+      const div = document.createElement('div');
+      div.className = isUser
+        ? 'p-3 rounded-2xl rounded-tr-xs bg-forest text-white text-xs leading-relaxed ml-6 border border-ink'
+        : 'p-3 rounded-2xl rounded-tl-xs bg-tinted border border-ink/20 text-xs text-ink leading-relaxed mr-4';
+
+      div.innerHTML = `
+        <span class="font-mono text-[10px] font-bold ${isUser ? 'text-amber' : 'text-forest'} block mb-1">
+          ${isUser ? 'YOU' : 'EUREKA MENTOR'}
+        </span>
+        ${text}
+      `;
+      feed.appendChild(div);
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    async function askMentorPreset(promptText) {
+      appendMentorMessage('user', promptText);
+      await apiClient.request('POST', '/api/v1/learning/mentor/chat', {
+        module: 'mod-2',
+        prompt: promptText,
+        gemini_online: PluginRegistry.gemini.enabled
+      });
+
+      let reply = '';
+      if (!PluginRegistry.gemini.enabled) {
+        reply = '<strong>[Offline Fallback Hint]</strong> GeminiLLMAdapter is offline. Check <code class="bg-white px-1 rounded">SET LOCAL hnsw.iterative_scan = \'relaxed_order\';</code> and <code class="bg-white px-1 rounded">hnsw.ef_search = 100;</code>.';
+      } else if (promptText.includes('iterative_scan')) {
+        reply = 'In <strong>pgvector 0.8.0</strong>, setting <code class="bg-white px-1 rounded">SET LOCAL hnsw.iterative_scan = \'relaxed_order\';</code> instructs PostgreSQL to keep traversing the HNSW graph layers when your <code class="bg-white px-1 rounded">WHERE org_id = ...</code> filter discards candidate vectors, guaranteeing full <code class="bg-white px-1 rounded">LIMIT 10</code> results.';
+      } else if (promptText.includes('Debug')) {
+        reply = 'I inspected your SQL editor: <code class="bg-white px-1 rounded">hnsw.iterative_scan</code> is currently <code class="bg-white px-1 rounded">\'off\'</code> and <code class="bg-white px-1 rounded">ef_search = 40</code> is too narrow for filtered tenant subsets. Change iterative_scan to <code class="bg-white px-1 rounded">\'relaxed_order\'</code> and raise <code class="bg-white px-1 rounded">ef_search</code> to <code class="bg-white px-1 rounded">100</code>.';
+      } else {
+        reply = 'Try updating lines 2–3 to:<br><code class="bg-white px-1.5 py-0.5 rounded block mt-1 font-mono text-[11px]">SET LOCAL hnsw.iterative_scan = \'relaxed_order\';<br>SET LOCAL hnsw.ef_search = 100;</code><br>Then click <strong>Run Test Cases (Judge0)</strong>!';
+      }
+
+      appendMentorMessage('mentor', reply);
+
+      if (voiceEnabled && 'speechSynthesis' in window) {
+        try {
+          const cleanText = reply.replace(/<[^>]*>?/gm, '');
+          const utterance = new SpeechSynthesisUtterance(cleanText);
+          utterance.rate = 1.05;
+          window.speechSynthesis.cancel();
+          window.speechSynthesis.speak(utterance);
+        } catch (e) {
+          console.warn('TTS unavailable:', e);
+        }
+      }
+    }
+
+    function handleMentorSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('mentorInput');
+      const val = input.value.trim();
+      if (!val) return;
+      input.value = '';
+      askMentorPreset(val);
+    }
+
+    function toggleVoiceMentor() {
+      voiceEnabled = !voiceEnabled;
+      const btn = document.getElementById('voiceMentorBtn');
+      const label = document.getElementById('voiceStatusLabel');
+      if (voiceEnabled) {
+        btn.classList.remove('bg-tinted');
+        btn.classList.add('bg-mint', 'text-forest');
+        label.textContent = 'Voice Active';
+        showToast('WebSpeechPlugin (STT/TTS) activated for AI Mentor');
+      } else {
+        btn.classList.add('bg-tinted');
+        btn.classList.remove('bg-mint', 'text-forest');
+        label.textContent = 'Voice Off';
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        showToast('Switched AI Mentor to text-only mode');
+      }
+    }
+
+    // =========================================================================
+    // 12. TECHNOLOGY ADOPTION ADVISOR (Dynamic Priority Weighting)
+    // =========================================================================
+    const ADOPTION_DATASETS = {
+      llm: {
+        title: 'Enterprise Reasoning & RAG Synthesis Models',
+        candidates: [
+          {
+            name: 'Gemini 2.5 Flash (Enterprise API)',
+            latency: '310 ms',
+            cost: '$0.15 / 1M in • $0.60 / 1M out',
+            residency: 'Google Cloud India (asia-south1) • Zero Data Retention',
+            license: 'Commercial Enterprise SLA',
+            scores: { cost: 96, latency: 98, privacy: 86 },
+            verdictTitle: 'Adopt Gemini 2.5 Flash as Primary Low-Latency Orchestrator',
+            verdictSummary: 'Delivers sub-350ms p95 latency and 5x lower token cost than competing frontier models while honoring regional ZDR guarantees for non-PCI engineering intelligence.',
+            pros: [
+              'Meets sub-400ms p95 latency SLA for interactive developer and analyst workflows',
+              '68% lower monthly token spend compared to frontier alternatives',
+              'Native structured JSON output & 1M context window'
+            ],
+            risks: [
+              'Route raw PCI-DSS cardholder telemetry to VPC-hosted Qwen-32B per Sec 4.2'
+            ]
+          },
+          {
+            name: 'DeepSeek-R1-Distill-Qwen-32B (VPC)',
+            latency: '820 ms',
+            cost: '$1,850 / mo fixed (1x A100 80GB)',
+            residency: '100% Air-Gapped Apex AWS EKS VPC',
+            license: 'Apache 2.0 Open Weights',
+            scores: { cost: 82, latency: 74, privacy: 100 },
+            verdictTitle: 'Adopt DeepSeek-R1-Distill-Qwen-32B for Air-Gapped PCI/PII Workloads',
+            verdictSummary: 'Given high VPC privacy priority, self-hosting DeepSeek-R1-Distill-Qwen-32B inside Apex’s EKS GPU pool guarantees zero external data egress under 2026_Cloud_Security_Policy.docx.',
+            pros: [
+              '100% air-gapped VPC residency with zero third-party token transmission',
+              'Predictable fixed GPU cost at high dispute-audit volumes',
+              'Permissive Apache 2.0 commercial license'
+            ],
+            risks: [
+              'Requires vLLM warm-pool autoscaling and <think> block output sanitization'
+            ]
+          },
+          {
+            name: 'Claude 3.7 Sonnet (Standard)',
+            latency: '940 ms',
+            cost: '$3.00 / 1M in • $15.00 / 1M out',
+            residency: 'US-East / Cross-Border Routing',
+            license: 'Commercial API',
+            scores: { cost: 62, latency: 70, privacy: 75 },
+            verdictTitle: 'Reserve Claude 3.7 Sonnet for Offline Architecture Audits Only',
+            verdictSummary: 'Strong code synthesis quality, but cross-border routing and 20x higher output token pricing make it suboptimal for high-throughput production RAG.',
+            pros: ['High complex refactoring accuracy'],
+            risks: ['Exceeds Q4 FinOps token budget ceiling at scale']
+          }
+        ]
+      },
+      vector: {
+        title: 'Production Vector Storage & Hybrid Retrieval Engines',
+        candidates: [
+          {
+            name: 'Supabase PostgreSQL + pgvector 0.8.0',
+            latency: '38 ms (p95)',
+            cost: '$0 incremental (Existing Cluster)',
+            residency: 'In-Database RLS • Single ACID Transaction Boundary',
+            license: 'PostgreSQL Open Source',
+            scores: { cost: 99, latency: 92, privacy: 98 },
+            verdictTitle: 'Standardize on PostgreSQL + pgvector 0.8.0',
+            verdictSummary: 'Upgrading Apex’s existing PostgreSQL 16 cluster to pgvector 0.8.0 solves filtered tenant recall via iterative HNSW scans while keeping embeddings and Row-Level Security in one ACID boundary.',
+            pros: [
+              'Eliminates $28,800/yr in external vector database licensing and dual-write CDC bugs',
+              'Native SQL joins between document_chunks, organizations, and access permissions',
+              'Halfvec (fp16) compression cuts RAM footprint by 48%'
+            ],
+            risks: [
+              'Partition tables by org_id once corpus exceeds 50M vectors'
+            ]
+          },
+          {
+            name: 'Pinecone Serverless (Dedicated)',
+            latency: '44 ms (p95)',
+            cost: '$2,400 / mo estimated @ 15M vectors',
+            residency: 'External SaaS Vector Store (Requires CDC Sync)',
+            license: 'Proprietary SaaS',
+            scores: { cost: 68, latency: 90, privacy: 74 },
+            verdictTitle: 'Defer Pinecone Serverless in Favor of In-DB pgvector',
+            verdictSummary: 'Managed elasticity is strong, but introduces cross-network embedding sync and an extra vendor compliance boundary.',
+            pros: ['Zero index maintenance overhead'],
+            risks: ['Eventual consistency lag between Postgres RLS updates and vector deletion']
+          },
+          {
+            name: 'Self-Hosted Qdrant Cluster',
+            latency: '31 ms (p95)',
+            cost: '$1,150 / mo (3-node HA StatefulSet)',
+            residency: 'Apex AWS EKS VPC',
+            license: 'Apache 2.0',
+            scores: { cost: 80, latency: 97, privacy: 95 },
+            verdictTitle: 'Consider Self-Hosted Qdrant Only Above 100M Vectors',
+            verdictSummary: 'Fastest raw Rust HNSW throughput, though unnecessary operational overhead for Apex’s current 12M dispute chunk footprint.',
+            pros: ['Sub-35ms p95 Rust HNSW filtering'],
+            risks: ['Requires dedicated StatefulSet SRE on-call rotation']
+          }
+        ]
+      },
+      agents: {
+        title: 'Agent & Tool Orchestration Frameworks',
+        candidates: [
+          {
+            name: 'Deterministic FastAPI Pipelines + MCP',
+            latency: '12 ms overhead',
+            cost: '$0 (Native Python 3.12)',
+            residency: '100% Inside Apex FastAPI Monolith',
+            license: 'MIT License',
+            scores: { cost: 98, latency: 99, privacy: 97 },
+            verdictTitle: 'Adopt Deterministic FastAPI Pipelines + Typed MCP Adapters',
+            verdictSummary: 'Aligned with Eureka’s core architecture principle: handle objective validation deterministically and use typed Pydantic/MCP schemas before introducing autonomous loops.',
+            pros: [
+              'Predictable latency, full auditability, and zero framework abstraction bloat',
+              'Reuses existing FastAPI JWT/RLS security dependencies'
+            ],
+            risks: ['Introduce autonomous multi-step loops only for deep research edge cases']
+          },
+          {
+            name: 'LangGraph Stateful Orchestrator',
+            latency: '65 ms graph overhead',
+            cost: '$0 OSS / Optional LangSmith',
+            residency: 'Self-Hosted Python Worker',
+            license: 'MIT License',
+            scores: { cost: 88, latency: 84, privacy: 90 },
+            verdictTitle: 'Stage LangGraph for Phase 2 Human-in-the-Loop Research Agents',
+            verdictSummary: 'Ideal when multi-step cyclic retries and checkpointed human approvals are required in future P2 agentic workflows.',
+            pros: ['Built-in state checkpointing and human-in-the-loop interrupts'],
+            risks: ['Higher debugging complexity for simple linear RAG pipelines']
+          },
+          {
+            name: 'Unconstrained Autonomous Agent Swarm',
+            latency: '4,200 ms+ (multi-turn)',
+            cost: 'High (Unbounded token loops)',
+            residency: 'VPC / Hybrid',
+            license: 'Various',
+            scores: { cost: 45, latency: 40, privacy: 78 },
+            verdictTitle: 'Reject Unconstrained Agent Swarms for Production FinTech',
+            verdictSummary: 'Unbounded tool loops violate FinTech latency SLAs and deterministic audit requirements.',
+            pros: ['Flexible open-ended exploration'],
+            risks: ['Unpredictable token burn and non-deterministic tool execution']
+          }
+        ]
+      }
+    };
+
+    function updateAdoptionWeights() {
+      const c = parseInt(document.getElementById('weightCostSlider').value, 10);
+      const l = parseInt(document.getElementById('weightLatencySlider').value, 10);
+      const p = parseInt(document.getElementById('weightPrivacySlider').value, 10);
+      const total = c + l + p;
+
+      const normC = Math.round((c / total) * 100);
+      const normL = Math.round((l / total) * 100);
+      const normP = 100 - normC - normL;
+
+      document.getElementById('weightCostVal').textContent = `${normC}%`;
+      document.getElementById('weightLatencyVal').textContent = `${normL}%`;
+      document.getElementById('weightPrivacyVal').textContent = `${normP}%`;
+
+      renderAdoptionComparison(false);
+    }
+
+    async function renderAdoptionComparison(callApi = false) {
+      const key = document.getElementById('adoptionScenarioSelect').value;
+      const data = ADOPTION_DATASETS[key];
+
+      const wC = parseInt(document.getElementById('weightCostVal').textContent, 10) / 100;
+      const wL = parseInt(document.getElementById('weightLatencyVal').textContent, 10) / 100;
+      const wP = parseInt(document.getElementById('weightPrivacyVal').textContent, 10) / 100;
+
+      if (callApi) {
+        await apiClient.request('POST', '/api/v1/adoption/compare', {
+          scenario: key,
+          weights: { cost: wC, latency: wL, privacy: wP }
+        });
+      }
+
+      const scoredCandidates = data.candidates.map(c => {
+        const weighted = Math.round(c.scores.cost * wC + c.scores.latency * wL + c.scores.privacy * wP);
+        return { ...c, weightedScore: weighted };
+      });
+
+      const maxScore = Math.max(...scoredCandidates.map(c => c.weightedScore));
+      const winner = scoredCandidates.find(c => c.weightedScore === maxScore);
+
+      const table = document.getElementById('adoptionMatrixTable');
+      const recBox = document.getElementById('adoptionRecommendationBox');
+
+      table.innerHTML = `
+        <thead>
+          <tr class="border-b-2 border-ink bg-tinted text-xs font-mono uppercase text-ink">
+            <th class="py-4 px-5">Evaluation Criterion</th>
+            ${scoredCandidates.map(c => {
+              const isWinner = c.weightedScore === maxScore;
+              return `
+                <th class="py-4 px-5 ${isWinner ? 'bg-mint/70' : ''}">
+                  <div class="font-sans font-bold text-sm text-ink normal-case">${c.name}</div>
+                  <span class="inline-block mt-1 font-mono text-[10px] px-2 py-0.5 rounded-full ${isWinner ? 'bg-forest text-white' : 'bg-white text-ink-secondary border border-ink/30'}">
+                    ${isWinner ? '★ Top Weighted Fit' : 'Candidate'}
+                  </span>
+                </th>
+              `;
+            }).join('')}
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-borderLight text-xs sm:text-sm">
+          <tr>
+            <td class="py-3.5 px-5 font-bold text-ink bg-canvas">Latency (p95)</td>
+            ${scoredCandidates.map(c => `<td class="py-3.5 px-5 font-mono font-bold ${c.weightedScore === maxScore ? 'bg-mint/30 text-forest' : ''}">${c.latency}</td>`).join('')}
+          </tr>
+          <tr>
+            <td class="py-3.5 px-5 font-bold text-ink bg-canvas">Pricing / Infra Cost</td>
+            ${scoredCandidates.map(c => `<td class="py-3.5 px-5 font-mono text-xs ${c.weightedScore === maxScore ? 'bg-mint/30 font-semibold' : ''}">${c.cost}</td>`).join('')}
+          </tr>
+          <tr>
+            <td class="py-3.5 px-5 font-bold text-ink bg-canvas">Data Residency & Privacy</td>
+            ${scoredCandidates.map(c => `<td class="py-3.5 px-5 text-xs ${c.weightedScore === maxScore ? 'bg-mint/30' : ''}">${c.residency}</td>`).join('')}
+          </tr>
+          <tr>
+            <td class="py-3.5 px-5 font-bold text-ink bg-canvas">License & Governance</td>
+            ${scoredCandidates.map(c => `<td class="py-3.5 px-5 font-mono text-xs ${c.weightedScore === maxScore ? 'bg-mint/30' : ''}">${c.license}</td>`).join('')}
+          </tr>
+          <tr>
+            <td class="py-3.5 px-5 font-bold text-ink bg-canvas">Weighted Adoption Score</td>
+            ${scoredCandidates.map(c => `<td class="py-3.5 px-5 font-mono font-bold text-base ${c.weightedScore === maxScore ? 'bg-mint/30 text-emerald-dark' : ''}">${c.weightedScore} / 100</td>`).join('')}
+          </tr>
+        </tbody>
+      `;
+
+      recBox.innerHTML = `
+        <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-5">
+          <div class="space-y-3 max-w-3xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-forest text-white font-mono text-xs font-bold border border-ink">
+              <span>✓ EVIDENCE-BACKED VERDICT (${winner.weightedScore}/100)</span>
+            </div>
+            <h2 class="font-display text-3xl text-ink">${winner.verdictTitle}</h2>
+            <p class="text-sm text-ink-secondary leading-relaxed">${winner.verdictSummary}</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+              <div class="p-4 rounded-xl bg-white border border-ink">
+                <div class="font-mono text-[11px] font-bold uppercase text-emerald-dark mb-2">Key Advantages</div>
+                <ul class="space-y-1.5 text-xs text-ink">
+                  ${winner.pros.map(p => `<li class="flex items-start gap-2"><span class="text-emerald-dark font-bold">+</span><span>${p}</span></li>`).join('')}
+                </ul>
+              </div>
+              <div class="p-4 rounded-xl bg-amber-soft/50 border border-ink">
+                <div class="font-mono text-[11px] font-bold uppercase text-amber-900 mb-2">Mitigations & Operational Risks</div>
+                <ul class="space-y-1.5 text-xs text-ink">
+                  ${winner.risks.map(r => `<li class="flex items-start gap-2"><span class="text-amber-900 font-bold">!</span><span>${r}</span></li>`).join('')}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2.5 flex-shrink-0">
+            <button onclick="exportAdoptionMemo('${winner.verdictTitle.replace(/'/g, "\\'")}', '${winner.verdictSummary.replace(/'/g, "\\'")}')" class="btn-primary text-xs justify-center">
+              <svg class="w-4 h-4 text-amber" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <span>Export Markdown Memo</span>
+            </button>
+            <button onclick="navigateTo('weekly-digest')" class="btn-sketch text-xs justify-center">
+              Share in Weekly Digest →
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function exportAdoptionMemo(title, summary) {
+      const memoText = `# EUREKA ARCHITECTURE ADOPTION MEMO\nOrganization: ${EurekaDB.state.activeOrg.name}\nDecision: ${title}\n\nSummary:\n${summary}`;
+      const tempArea = document.createElement('textarea');
+      tempArea.value = memoText;
+      document.body.appendChild(tempArea);
+      tempArea.select();
+      try {
+        document.execCommand('copy');
+        showToast('Markdown Adoption Memo copied to clipboard!');
+      } catch (err) {
+        showToast('Adoption Memo prepared!');
+      }
+      document.body.removeChild(tempArea);
+    }
+
+    // =========================================================================
+    // 13. WEEKLY DIGEST & RESEND EMAIL PLUGIN
+    // =========================================================================
+    function renderWeeklyDigest() {
+      const container = document.getElementById('weeklyDigestArticlesList');
+      const countEl = document.getElementById('digestSourceCount');
+      const techs = EurekaDB.state.technologies.slice(0, 3);
+      if (countEl) countEl.textContent = EurekaDB.state.technologies.length;
+
+      container.innerHTML = techs.map((t, idx) => `
+        <article class="p-5 rounded-2xl bg-canvas border border-ink space-y-2.5">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="font-mono text-xs font-bold px-2.5 py-0.5 rounded-full ${idx === 0 ? 'bg-mint text-forest' : 'bg-amber-soft text-amber-900'} border border-ink">
+              #${idx + 1} TOP ORG MATCH • ${t.relevanceScore}% FIT
+            </span>
+            <span class="font-mono text-xs text-ink-muted">${t.domain} • ${t.license}</span>
+          </div>
+          <h3 class="font-display text-2xl text-ink">${t.name}: ${t.tagline}</h3>
+          <p class="text-sm text-ink-secondary leading-relaxed">
+            <strong>Why it matters to ${EurekaDB.state.activeOrg.name}:</strong> ${t.whatChanged}
+          </p>
+          <div class="pt-2 flex flex-wrap items-center gap-3 text-xs font-bold">
+            <button onclick="openTechDetail('${t.id}')" class="text-forest underline underline-offset-4">Read Full Technical Brief →</button>
+            <button onclick="jumpToRagWithTech('${t.id}')" class="text-emerald-dark underline underline-offset-4">Inspect Enterprise RAG Fit →</button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    async function saveNotificationPreferences() {
+      EurekaDB.state.preferences.weeklyEmail = document.getElementById('prefWeeklyEmail').checked;
+      EurekaDB.state.preferences.breakingAlerts = document.getElementById('prefBreakingAlerts').checked;
+      EurekaDB.state.preferences.skillReminders = document.getElementById('prefSkillReminders').checked;
+      EurekaDB.state.preferences.depth = document.getElementById('prefDepthSelect').value;
+      EurekaDB.save();
+
+      await apiClient.request('PUT', '/api/v1/notifications/preferences', EurekaDB.state.preferences);
+      showToast('Notification preferences saved via PUT /api/v1/notifications/preferences');
+    }
+
+    function toggleDigestDomain(btn, domain) {
+      btn.classList.toggle('bg-forest');
+      btn.classList.toggle('text-white');
+      btn.classList.toggle('bg-white');
+      btn.classList.toggle('text-ink');
+      saveNotificationPreferences();
+    }
+
+    async function sendTestDigestViaResend() {
+      const res = await apiClient.request('POST', '/api/v1/digests/dispatch', {
+        issue: 48,
+        recipient: 'ananya.d@apexfintech.io',
+        items_count: 3
+      });
+
+      if (PluginRegistry.resend.enabled) {
+        showToast(`Resend Receipt ${res.data.issue ? 'msg_rsnd_94a2' : ''}: Issue #48 delivered to ananya.d@apexfintech.io`);
+      } else {
+        showToast('ResendEmailAdapter is OFFLINE — Digest safely queued in local outbox buffer');
+      }
+    }
+
+    // =========================================================================
+    // 14. GLOBAL REFRESH & INITIALIZATION
+    // =========================================================================
+    function refreshAllDynamicViews() {
+      updateDashboardKPIs();
+      renderDashboardAlerts();
+      filterTechnologies();
+      renderCompanyDocs();
+      populateRagSelector();
+      renderSkillIntelligence();
+      renderLearningModules();
+      renderWeeklyDigest();
+      renderPluginsList();
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      renderPipelineStages(-1);
+      refreshAllDynamicViews();
+      await runRagAnalysis(false);
+      await renderAdoptionComparison(false);
+      // Initial REST bootstrap call
+      await apiClient.request('GET', '/api/v1/technologies', { org_id: EurekaDB.state.activeOrg.id });
+    });
+  </script>
+</body>
+</html>
