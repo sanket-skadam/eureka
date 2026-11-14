@@ -124,3 +124,4 @@ export function logTelemetry(
   saveState(updated);
   return updated;
 }
+

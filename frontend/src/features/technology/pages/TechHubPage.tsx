@@ -217,3 +217,4 @@ export const TechHubPage: React.FC = () => {
     </div>
   );
 };
+

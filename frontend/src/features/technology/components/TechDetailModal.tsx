@@ -222,3 +222,4 @@ export const TechDetailModal: React.FC = () => {
     </div>
   );
 };
+

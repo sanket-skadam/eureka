@@ -146,3 +146,4 @@ export interface DigestPreferences {
   filterLevel: 'High Impact Only' | 'All Relevant';
   activeRolePreview: string;
 }
+

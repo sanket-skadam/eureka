@@ -346,3 +346,4 @@ export const UpskillingStudioPage: React.FC = () => {
     </div>
   );
 };
+
