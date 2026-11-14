@@ -18,6 +18,7 @@ import {
   resetDatabase as resetDbService,
   logTelemetry
 } from '../services/storage';
+import { apiFetch } from '../services/api/client';
 
 interface EurekaContextType {
   state: EurekaDatabaseState;
